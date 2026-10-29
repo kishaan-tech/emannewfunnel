@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<!-- VSL CALL CONFIRMED (/vslconfirmation). Where iClosed sends people who
+     booked from /vsl, so this is the sibling of vsl.html the way
+     confirmation.html is the sibling of book-call.html. A copy of
+     confirmation.html, kept separate so the VSL funnel's post-booking copy can
+     change without touching the webinar funnel's.
+
+     Section order mirrors the live page at thebrandoperator.com/confirmation:
+     hero, next-steps video, pre-call checklist, the breakout videos, proof,
+     closing nudge. Everything visual comes from assets/css/styles.css.
+
+     Base Meta Pixel + PageView only, same as confirmation.html. If booked calls
+     from the VSL are ever optimised for, a Schedule event belongs here. -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '[PLACEHOLDER_META_PIXEL_ID]');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=[PLACEHOLDER_META_PIXEL_ID]&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  <title>Your call is booked &middot; The Brand Operator</title>
+  <meta name="robots" content="noindex" />
+
+  <!-- Placed before the stylesheet on purpose: it hides the page until
+       Humblytics calls window._hmblReveal(), so it must run before first paint.
+       The 2000ms setTimeout is the failsafe that reveals the page if the script
+       never loads (ad blocker, outage). See README section 8. -->
+  <!-- Start Humblytics Tracking Code -->
+  <script>
+    (function(){
+      document.documentElement.style.opacity='0';
+      window._hmblReveal=function(){ document.documentElement.style.opacity='1'; };
+      setTimeout(window._hmblReveal, 2000);
+    })();
+  </script>
+  <script async src="https://app.humblytics.com/hmbl.min.js?id=[PLACEHOLDER_HUMBLYTICS_ID]"></script>
+  <!-- End Humblytics Tracking Code -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <!-- Wistia player runtime. Loaded ONCE for the whole page; the individual
+       videos each pull their own media module next to their markup below. -->
+  <script src="https://fast.wistia.com/player.js" async></script>
+</head>
+<body>
+
+  <!-- Page-level confetti burst. JS fills this on load; empty and invisible
+       with JS off or under reduced motion, so it can never block the page. -->
+  <div class="celebrate-layer" data-celebrate aria-hidden="true"></div>
+
+  <main>
+
+    <!-- =================================================================== -->
+    <!-- HERO                                                                -->
+    <!-- =================================================================== -->
+    <section class="hero hero--top" aria-labelledby="booked-title">
+      <div class="container center">
+        <span class="pill pill--breathe reveal">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="pill-text">Call booked</span>
+        </span>
+        <h1 id="booked-title" class="reveal">
+          You are in. <span class="hl">Well done</span>
+        </h1>
+        <p class="subhead reveal">
+          <!-- PLACEHOLDER START: NEEDS YOUR COPY -->
+          We look forward to speaking with you at your scheduled time. Watch the video below for
+          the next steps, so you get the most out of the call.
+          <!-- PLACEHOLDER END -->
+        </p>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- NEXT-STEPS VIDEO + CONTACT NOTICE                                   -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="next-steps-title" style="padding-top:0">
+      <div class="container">
+        <h2 id="next-steps-title" class="sr-only">Watch this before your call</h2>
+
+        <!-- Main video (7 minutes, 16:9). player.js is already loaded in <head>;
+             this pulls only its own media module.
+
+             Autoplays WITH sound, matching the other pages. Chrome and Safari
+             refuse sound-on autoplay unless the visitor has a strong history with
+             the domain, and a refused autoplay leaves the video sitting paused, so
+             initAutoplayVideo() in main.js catches that case: it starts muted, then
+             unmutes on the visitor's first tap or click. The data attribute is that
+             code's hook. Its blurred-swatch placeholder lives in styles.css next to
+             the other two. -->
+        <div class="video-embed reveal" data-autoplay-video="nb4irg23tf">
+          <script src="https://fast.wistia.com/embed/nb4irg23tf.js" async type="module"></script>
+          <wistia-player media-id="nb4irg23tf" aspect="1.7777777777777777"
+                         autoplay playsinline></wistia-player>
+        </div>
+
+        <!-- No countdown here, unlike confirmedp: nothing is promised within a
+             fixed number of minutes, so the box carries neither the
+             data-callback-timer hook nor a clock and initCallbackTimer() no-ops. -->
+        <div class="contact-notice reveal">
+          <div class="contact-notice__body">
+            <p class="contact-notice__copy">You will get a text or a call from us shortly.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- PRE-CALL CHECKLIST                                                  -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="checklist-title">
+      <div class="container">
+        <div class="card reveal">
+
+          <!-- PLACEHOLDER START: NEEDS YOUR COPY — checklist heading and steps -->
+          <h2 id="checklist-title" class="prep-title">Pre-Call Checklist</h2>
+          <p class="ink-soft" style="text-align:center; margin-bottom:var(--sp-3)">Do these before your call to get the most out of it.</p>
+
+          <ol class="prep-steps">
+
+            <li class="prep-step">
+              <span class="prep-icon" aria-hidden="true">1</span>
+              <div class="prep-copy">
+                <h3>Take the call on a laptop, somewhere quiet</h3>
+                <p>We are going to talk through your goals, your product and your capital, and we
+                do not run these calls with someone who is driving or between errands. Treat it
+                like a meeting that matters, because the decision at the end of it does.</p>
+              </div>
+            </li>
+
+            <li class="prep-step">
+              <span class="prep-icon" aria-hidden="true">2</span>
+              <div class="prep-copy">
+                <h3>Bring your questions</h3>
+                <p>Write down anything you want answered before you would commit to something like
+                this. We would rather you make an informed decision than a fast one, and we will
+                answer everything as straight as we can.</p>
+              </div>
+            </li>
+
+            <li class="prep-step">
+              <span class="prep-icon" aria-hidden="true">3</span>
+              <div class="prep-copy">
+                <h3>Accept the calendar invite in your inbox</h3>
+                <p>This is what actually holds your slot. If it is not in your inbox, check
+                promotions and spam.</p>
+                <p class="ink-soft">If the invite arrives as "Invitation from unknown sender", your
+                mail client may show "I know the sender" instead of "Add to calendar". Click that
+                first, then add it.</p>
+
+                <!-- Real links, not decoration. Each opens that provider's web
+                     inbox in a new tab. Apple Mail has no web URL scheme a
+                     browser can open, so the Apple link goes to iCloud Mail,
+                     which is the web equivalent. -->
+                <div class="mail-apps">
+                  <a class="mail-app" href="https://mail.google.com/mail/u/0/#search/label%3Ainbox"
+                     target="_blank" rel="noopener noreferrer" aria-label="Open Gmail in a new tab">
+                    <svg viewBox="0 0 48 48" aria-hidden="true">
+                      <path fill="#fff" d="M6 13h36v22H6z"/>
+                      <path fill="#e94235" d="M6 13.6c0-1.6 1.8-2.5 3.1-1.6L24 23.1V35H8.4A2.4 2.4 0 0 1 6 32.6z"/>
+                      <path fill="#34a853" d="M42 13.6c0-1.6-1.8-2.5-3.1-1.6L24 23.1V35h15.6a2.4 2.4 0 0 0 2.4-2.4z"/>
+                      <path fill="#fbbc04" d="M6 13.6 24 27.1l18-13.5v6.2L24 33.3 6 19.8z"/>
+                    </svg>
+                    <span class="mail-app__name">Gmail</span>
+                  </a>
+
+                  <a class="mail-app" href="https://outlook.live.com/mail/0/"
+                     target="_blank" rel="noopener noreferrer" aria-label="Open Outlook in a new tab">
+                    <svg viewBox="0 0 48 48" aria-hidden="true">
+                      <path fill="#1a56c4" d="M26 11h16.2a1.8 1.8 0 0 1 1.8 1.8v22.4a1.8 1.8 0 0 1-1.8 1.8H26z"/>
+                      <path fill="#3d7ff0" d="M26 11h16.2a1.8 1.8 0 0 1 1.8 1.8v3.4L26 25.6z"/>
+                      <path fill="#0b3a92" d="M4 9.4 25 6v36L4 38.6z"/>
+                      <ellipse cx="14.4" cy="24" rx="6.2" ry="7.4" fill="#fff"/>
+                      <ellipse cx="14.4" cy="24" rx="3" ry="4.3" fill="#0b3a92"/>
+                    </svg>
+                    <span class="mail-app__name">Outlook</span>
+                  </a>
+
+                  <a class="mail-app" href="https://www.icloud.com/mail/"
+                     target="_blank" rel="noopener noreferrer" aria-label="Open iCloud Mail in a new tab">
+                    <svg viewBox="0 0 48 48" aria-hidden="true">
+                      <rect x="5" y="12" width="38" height="24" rx="5" fill="#2f95f6"/>
+                      <path d="M8.5 16.5 24 27l15.5-10.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="mail-app__name">Apple Mail</span>
+                  </a>
+                </div>
+              </div>
+            </li>
+
+          </ol>
+          <!-- PLACEHOLDER END -->
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- BREAKOUT VIDEOS (the FAQ, answered on camera)                       -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="breakout-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 id="breakout-title">A few of your questions and concerns answered</h2>
+        </div>
+
+        <!-- The eight breakout videos, one per row so each plays large. Same set
+             and same order as the three confirmation pages, which is the point:
+             these are the revised cuts (Wistia calls them "AFTER REVISION 01").
+             An earlier build of this page used the older unrevised 6..10 taken
+             from the previous Framer site; do not reintroduce them.
+
+             Wistia's iframe embed rather than the <wistia-player> component the
+             main video uses: an iframe is self-contained, so eight of them cost
+             no extra module scripts, and .video-embed already sizes an iframe.
+
+             None of these autoplay, on purpose. Eight players competing for
+             audio on one page is not a thing anyone wants. They carry no visible
+             heading by request, so each iframe title is the ONLY label a
+             non-sighted visitor gets. -->
+        <div class="video-stack reveal">
+
+          <div class="video-embed">
+            <iframe src="https://fast.wistia.net/embed/iframe/joc4yrf0da?seo=true&amp;videoFoam=true"
+                    title="Am I reselling name brands or doing arbitrage/dropshipping?"
+                    allow="autoplay; fullscreen" allowfullscreen
+                    frameborder="0" scrolling="no"></iframe>
+          </div>
+
+          <!-- PLACEHOLDER: NEEDS YOUR COPY — the question this one answers.
+               These players carry no visible heading, so the iframe title is the
+               only thing a screen reader announces, and "Breakout video 2" tells
+               a non-sighted visitor nothing. Wistia calls it "Breakout Video 4
+               (1)", which is the name it gets from being duplicated, so it does
+               not identify the topic either. -->
+          <div class="video-embed">
+            <iframe src="https://fast.wistia.net/embed/iframe/9din2qrlss?seo=true&amp;videoFoam=true"
+                    title="Breakout video 2"
+                    allow="autoplay; fullscreen" allowfullscreen
+                    frameborder="0" scrolling="no"></iframe>
+          </div>
+
+          <!-- Slots 2 and 3. Wistia calls these "Breakout Video 6" and "Breakout
+               Video 8" from the June set, so the names do NOT indicate position;
+               the running order below is what governs. Titles here are the only
+               label a screen reader gets, so if the two are the wrong way round
+               the fix is to swap the two src values, not the titles. -->
+
+          <div class="video-embed">
+            <iframe src="https://fast.wistia.net/embed/iframe/sdmsjc0zja?seo=true&amp;videoFoam=true"
+                    title="Can I fit this around my family, busy schedule, and current commitments?"
+                    allow="autoplay; fullscreen" allowfullscreen
+                    frameborder="0" scrolling="no"></iframe>
+          </div>
+
+          <div class="video-embed">
+            <iframe src="https://fast.wistia.net/embed/iframe/xl9qabq395?seo=true&amp;videoFoam=true"
+                    title="What are realistic results and what does the long term look like?"
+                    allow="autoplay; fullscreen" allowfullscreen
+                    frameborder="0" scrolling="no"></iframe>
+          </div>
+
+          <div class="video-embed">
+            <iframe src="https://fast.wistia.net/embed/iframe/4olf90wcs8?seo=true&amp;videoFoam=true"
+                    title="Can a total beginner survive against experienced sellers and big brands?"
+                    allow="autoplay; fullscreen" allowfullscreen
+                    frameborder="0" scrolling="no"></iframe>
+          </div>
+
+          <div class="video-embed">
+            <iframe src="https://fast.wistia.net/embed/iframe/nl3oc5uqbe?seo=true&amp;videoFoam=true"
+                    title="How much capital does it take to get started?"
+                    allow="autoplay; fullscreen" allowfullscreen
+                    frameborder="0" scrolling="no"></iframe>
+          </div>
+
+          <div class="video-embed">
+            <iframe src="https://fast.wistia.net/embed/iframe/hrsjeqoucv?seo=true&amp;videoFoam=true"
+                    title="How long is the live training?"
+                    allow="autoplay; fullscreen" allowfullscreen
+                    frameborder="0" scrolling="no"></iframe>
+          </div>
+
+          <div class="video-embed">
+            <iframe src="https://fast.wistia.net/embed/iframe/0wx48zqhb7?seo=true&amp;videoFoam=true"
+                    title="What if I can't attend live?"
+                    allow="autoplay; fullscreen" allowfullscreen
+                    frameborder="0" scrolling="no"></iframe>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- PROOF: long-form case study, then short-form two-up                 -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="results-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 id="results-title">Wins from members who were exactly where you are</h2>
+          <p class="ink-soft">Take a look at what members inside the community who are no different
+          than you were able to achieve through a support system and the right blueprint</p>
+        </div>
+
+        <div class="case-study card reveal">
+          <div class="case-study__video">
+            <div class="video-embed">
+              <iframe src="https://www.youtube.com/embed/h1sWu42xnZA?si=S-hJmq1dXFmixQr4"
+                      title="Timmy: from zero to 1,000 dollar days" loading="lazy"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerpolicy="strict-origin-when-cross-origin"
+                      allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="case-study__body">
+            <span class="vt-headline">Timmy 0 - $1000 days</span>
+            <p class="case-study__context">A first-time seller who expected to lose money on his
+            test order.</p>
+            <p class="case-study__label">After joining Brand Operator</p>
+            <ul class="check-list">
+              <li class="check-item"><span class="check-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="line">Hit $1,000 a day within his first week</span></li>
+              <li class="check-item"><span class="check-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="line">Over $6,000 and 100-plus units in his first seven days of launch</span></li>
+              <li class="check-item"><span class="check-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="line">Profitable on the test order he expected to lose money on</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- short form: videos and screenshots, two per row -->
+        <div class="proof-grid reveal">
+
+          <figure class="vt-item vt-item--stacked">
+            <div class="vt-frame">
+              <script src="https://fast.wistia.com/embed/r185w1sed0.js" async type="module"></script>
+              <wistia-player media-id="r185w1sed0" aspect="0.5625"></wistia-player>
+            </div>
+            <figcaption>
+              <span class="vt-headline">Allan - from 2000 to 20000 a month in revenue</span>
+              Stuck at $2,000 a month, he scaled past $20,000 a month, mostly by avoiding the manufacturing, listing, and PPC mistakes that quietly drain cash.
+            </figcaption>
+          </figure>
+
+          <figure class="vt-item vt-item--stacked">
+            <div class="vt-frame">
+              <script src="https://fast.wistia.com/embed/ejjhtlaboh.js" async type="module"></script>
+              <wistia-player media-id="ejjhtlaboh" aspect="0.5625"></wistia-player>
+            </div>
+            <figcaption>
+              <span class="vt-headline">From almost unprofitable to 35% margins</span>
+              A beginner who was unprofitable and unsure, until he could get direct feedback in the community. Six to eight months later he's at a 35% net margin and launching new products.
+            </figcaption>
+          </figure>
+
+          <div class="media-frame"><img src="assets/img/results/result-01.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Amazon Seller app dashboard showing 443.3K USD in product sales over the last 30 days." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-02.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Amazon Seller app dashboard showing 500.2K USD in product sales this month, up 33 percent." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-03.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Student Wins post showing 290.7K USD in product sales over twelve months, up 176 percent." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-04.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Student message reading 'Finished the month strong, 12k in rev', with a dashboard showing 12.01K USD over 30 days." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-05.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Student Wins post captioned 'This brand came back from the dead', showing 5,749 USD this month, up 951 percent." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-06.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Amazon Seller dashboard showing 314.3K USD over twelve months, up 184 percent." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-07.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Text message from a student on their last 800 units and moving 80 units a day." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-08.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Student Wins post showing 343.3K USD over the last 30 days and 376 units ordered." /></div>
+
+        </div>
+
+        <p class="ink-soft results-disclaimer">
+          We don't believe in get-rich-quick programs, only in hard work, adding value, and serving
+          others. There are no guarantees about results or earnings. All numbers shown are
+          illustrative.
+        </p>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- CLOSING                                                             -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="closing-title">
+      <div class="container" style="text-align:center">
+        <!-- No card: this sits straight on the page background as the closing
+             note. The button scrolls back up to the checklist, it does not leave
+             the page. There is nowhere else to send them; the call is booked. -->
+        <h2 id="closing-title">One thing before you go</h2>
+        <p class="ink-soft" style="max-width:var(--measure); margin-inline:auto">
+          Go to your email inbox and accept the calendar invite if you have not already. That is
+          what confirms your spot.
+        </p>
+        <div class="cal-buttons" style="justify-content:center">
+          <a class="btn btn--fx" href="#checklist-title">
+            <span class="btn-label">Confirm my spot now</span>
+            <span class="btn-arrow btn-arrow--up" aria-hidden="true">&uarr;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER (same disclaimers as the rest of the funnel) -->
+  <footer class="site-footer">
+    <div class="container">
+      <!-- PLACEHOLDER START: footer disclaimers -->
+      <p class="disclaimer">
+        This site is not part of, or endorsed by, Facebook, Instagram, or Meta Platforms, Inc.
+        FACEBOOK and INSTAGRAM are trademarks of Meta Platforms, Inc. It is also not affiliated
+        with, endorsed by, or sponsored by Amazon.com, Inc. or any of its subsidiaries.
+      </p>
+      <p class="disclaimer">
+        Earnings and results disclaimer: this training is educational. We do not guarantee any income
+        or specific outcome. Any figures or student results mentioned are illustrative and are not
+        typical. Building an Amazon business takes work, time, and capital, and involves risk,
+        including the risk of loss. Your results depend on your own effort, decisions, and market
+        conditions.
+      </p>
+      <p class="disclaimer">
+        Results may vary and testimonials are not claimed to represent typical results. All
+        testimonials are real. They show what the most motivated members have done and should not
+        be read as average. Do your own due diligence before any business decision.
+      </p>
+      <!-- PLACEHOLDER END -->
+      <p>
+        <small>&copy; <span data-cfg="year">2026</span> Eman LA / The Brand Operator. All rights reserved.</small>
+      </p>
+      <div class="footer-links">
+        <a href="#" data-cfg-href="privacyUrl"><!-- PLACEHOLDER -->Privacy Policy</a>
+        <a href="#" data-cfg-href="termsUrl"><!-- PLACEHOLDER -->Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

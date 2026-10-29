@@ -394,6 +394,21 @@
     whenReplayExpires(takeDown);
   }
 
+  /* The VSL on /vsl. Same refusal rule as the replay player: a placeholder id
+     shows a labelled box, never a Wistia embed that 404s. No expiry. */
+  function initVslVideo() {
+    var host = $("[data-vsl-video]");
+    if (!host) return;
+    var id = String(CFG.vslVideoId || "").trim();
+    if (!looksConfigured(id) || !/^[A-Za-z0-9]+$/.test(id)) {
+      host.innerHTML = placeholderBox("[PLACEHOLDER: set vslVideoId in config.js]");
+      return;
+    }
+    host.innerHTML =
+      '<script src="https://fast.wistia.com/embed/' + id + '.js" async type="module"><\/script>' +
+      '<wistia-player media-id="' + id + '" aspect="1.7778"></wistia-player>';
+  }
+
   /* The locked poster on /replay-optin. Paints the replay's own Wistia swatch
      behind the opt-in button, blurred by CSS. Deliberately NOT a player: the
      page gates the video, so nothing here can be pressed into playing it.
@@ -2134,6 +2149,7 @@
     initTimeline();
     initCalendar();
     initReplayVideo();
+    initVslVideo();
     initReplayTeaser();
     initBookingEmbed();
     initStickyCta();

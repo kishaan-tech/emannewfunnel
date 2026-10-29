@@ -156,6 +156,10 @@ window.FUNNEL_CONFIG = {
      URL. While it holds the placeholder the player area shows a labelled box. */
   replayVideoId: "vu4aaivfx4",
 
+  /* The VSL on /vsl. A Wistia media id, same format as replayVideoId. While it
+     holds the placeholder the player area shows a labelled box. */
+  vslVideoId: "[PLACEHOLDER: Wistia media id of the VSL]",
+
   /* Where every "Book my call" button goes. The iClosed event link.
      book-call.html mounts this same URL as an inline iClosed widget. */
   bookCallUrl: "https://app.iclosed.io/e/eman/brand-operator-live-training-application-call",

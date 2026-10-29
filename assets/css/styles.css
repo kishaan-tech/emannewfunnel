@@ -722,6 +722,13 @@ wistia-player[media-id='vu4aaivfx4']:not(:defined) { background-image: url('http
   border-radius: 0; overflow: visible;
 }
 
+/* /vsl. The player gets an accent glow so it reads as the page's centre of
+   gravity, the way the reference site's video does. The apply card below is a
+   normal .card whose heading block centres over the calendar. */
+.vsl-frame { box-shadow: 0 0 0 1px var(--accent-wash), 0 18px 60px var(--accent-wash); }
+.apply-card { text-align: center; }
+.apply-card .booking-embed { margin-top: var(--sp-3); text-align: left; }
+
 /* The policy links on /book-call, sitting under the calendar instead of in a
    footer. .footer-links already handles the row itself; this only buys the
    separation the removed footer's border and padding used to provide. */

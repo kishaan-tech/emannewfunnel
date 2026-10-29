@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<!-- VSL (/vsl). Headline, the VSL player, then the application calendar.
+     Modelled on the section order of thebrandoperator.com: promise headline
+     with one highlighted phrase, a one-line subhead, the video, an "Apply Now"
+     card holding the iClosed calendar, then results and the disclaimer stack.
+
+     Everything visual comes from assets/css/styles.css. The player is filled
+     by initVslVideo() from CFG.vslVideoId and the calendar by
+     initBookingEmbed() from CFG.bookCallUrl; both show a labelled placeholder
+     box until their value is real.
+
+     Base Meta Pixel + PageView only. No conversion events fire here; those stay
+     on confirmedp.html so the ad account keeps optimising toward registrations. -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '[PLACEHOLDER_META_PIXEL_ID]');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=[PLACEHOLDER_META_PIXEL_ID]&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  <title>Apply now &middot; The Brand Operator</title>
+  <meta name="robots" content="noindex" />
+
+  <!-- Placed before the stylesheet on purpose: it hides the page until
+       Humblytics calls window._hmblReveal(), so it must run before first paint.
+       The 2000ms setTimeout is the failsafe that reveals the page if the script
+       never loads (ad blocker, outage). See README section 8. -->
+  <!-- Start Humblytics Tracking Code -->
+  <script>
+    (function(){
+      document.documentElement.style.opacity='0';
+      window._hmblReveal=function(){ document.documentElement.style.opacity='1'; };
+      setTimeout(window._hmblReveal, 2000);
+    })();
+  </script>
+  <script async src="https://app.humblytics.com/hmbl.min.js?id=[PLACEHOLDER_HUMBLYTICS_ID]"></script>
+  <!-- End Humblytics Tracking Code -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <!-- Wistia player runtime. The VSL pulls its own media module at runtime. -->
+  <script src="https://fast.wistia.com/player.js" async></script>
+</head>
+<body>
+
+  <main>
+
+    <!-- =================================================================== -->
+    <!-- HERO: headline, subhead, the VSL                                    -->
+    <!-- =================================================================== -->
+    <section class="hero hero--top" aria-labelledby="vsl-title">
+      <div class="container center">
+        <!-- Client-supplied copy (Option 2A). The eyebrow reuses the hero pill. -->
+        <span class="pill pill--breathe reveal">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="pill-text">For salaried professionals earning $100K to $300K+</span>
+        </span>
+        <h1 id="vsl-title" class="reveal">
+          Turn Idle Six-Figure W2 Income Into An <span class="hl">Owned Cash-Flowing Asset</span>
+          In Under 5 Hours A Week
+        </h1>
+        <p class="subhead reveal">
+          You do not have time for a 30-hour side hustle. Here is how high-earning professionals
+          buy profitable, vetted Amazon businesses that run without consuming their calendar.
+        </p>
+
+        <!-- Filled by initVslVideo() from CFG.vslVideoId. Until that holds a
+             real Wistia id this stays a labelled placeholder box. -->
+        <div class="video-embed vsl-frame reveal" data-vsl-video></div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- APPLY: the iClosed calendar                                         -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="apply-title" style="padding-top:0">
+      <div class="container">
+        <div class="card apply-card reveal">
+          <h2 id="apply-title">
+            <!-- PLACEHOLDER -->Apply Now to <span class="hl">Launch Your Brand</span>
+          </h2>
+          <p class="ink-soft" style="max-width:var(--measure); margin-inline:auto">
+            <!-- PLACEHOLDER -->We will walk you through your exact path to launching a brand from A to Z
+            and tell you honestly whether this is the right fit for you.
+          </p>
+
+          <!-- Same hook and config key as book-call.html: initBookingEmbed()
+               mounts the iClosed widget from CFG.bookCallUrl. -->
+          <div class="booking-embed booking-embed--bare" data-booking-embed></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- RESULTS                                                             -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="results-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 id="results-title">Results From People No Different Than You</h2>
+        </div>
+
+        <div class="proof-grid reveal">
+          <div class="media-frame"><img src="assets/img/results/result-01.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Amazon Seller app dashboard showing 443.3K USD in product sales over the last 30 days." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-02.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Amazon Seller app dashboard showing 500.2K USD in product sales this month, up 33 percent." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-03.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Student Wins post showing 290.7K USD in product sales over twelve months, up 176 percent." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-04.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Student message reading 'Finished the month strong, 12k in rev', with a dashboard showing 12.01K USD over 30 days." /></div>
+        </div>
+
+        <p class="ink-soft results-disclaimer">
+          We don't believe in get-rich-quick programs, only in hard work, adding value, and serving
+          others. There are no guarantees about results or earnings. All numbers shown are
+          illustrative.
+        </p>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- CLOSING CTA: scrolls back to the calendar                           -->
+    <!-- =================================================================== -->
+    <section>
+      <div class="container">
+        <div class="cta-cluster reveal">
+          <a class="btn btn--fx" href="#apply-title">
+            <span class="btn-label"><!-- PLACEHOLDER -->Apply now</span>
+            <span class="btn-arrow btn-arrow--up" aria-hidden="true">&uarr;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <!-- PLACEHOLDER START: footer disclaimers -->
+      <p class="disclaimer">
+        This site is not part of, or endorsed by, Facebook, Instagram, or Meta Platforms, Inc.
+        FACEBOOK and INSTAGRAM are trademarks of Meta Platforms, Inc. It is also not affiliated
+        with, endorsed by, or sponsored by Amazon.com, Inc. or any of its subsidiaries.
+      </p>
+      <p class="disclaimer">
+        Earnings and results disclaimer: this training is educational. We do not guarantee any income
+        or specific outcome. Any figures or student results mentioned are illustrative and are not
+        typical. Building an Amazon business takes work, time, and capital, and involves risk,
+        including the risk of loss. Your results depend on your own effort, decisions, and market
+        conditions.
+      </p>
+      <p class="disclaimer">
+        Results may vary and testimonials are not claimed to represent typical results. All
+        testimonials are real. They show what the most motivated members have done and should not
+        be read as average. Do your own due diligence before any business decision.
+      </p>
+      <!-- PLACEHOLDER END -->
+      <p>
+        <small>&copy; <span data-cfg="year">2026</span> Eman LA / The Brand Operator. All rights reserved.</small>
+      </p>
+      <div class="footer-links">
+        <a href="#" data-cfg-href="privacyUrl"><!-- PLACEHOLDER -->Privacy Policy</a>
+        <a href="#" data-cfg-href="termsUrl"><!-- PLACEHOLDER -->Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

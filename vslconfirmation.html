@@ -223,88 +223,94 @@
           <h2 id="breakout-title">A few of your questions and concerns answered</h2>
         </div>
 
-        <!-- The eight breakout videos, one per row so each plays large. Same set
-             and same order as the three confirmation pages, which is the point:
-             these are the revised cuts (Wistia calls them "AFTER REVISION 01").
-             An earlier build of this page used the older unrevised 6..10 taken
-             from the previous Framer site; do not reintroduce them.
+        <!-- The eight FAQ videos (Wistia "FAQ 1 Edited" .. "FAQ 8 Edited"), in that
+             order, one per row so each plays large. Each carries a visible
+             question written from what the video actually says (taken from its
+             Wistia captions); the iframe title repeats it for screen readers.
 
-             Wistia's iframe embed rather than the <wistia-player> component the
-             main video uses: an iframe is self-contained, so eight of them cost
-             no extra module scripts, and .video-embed already sizes an iframe.
-
-             None of these autoplay, on purpose. Eight players competing for
-             audio on one page is not a thing anyone wants. They carry no visible
-             heading by request, so each iframe title is the ONLY label a
-             non-sighted visitor gets. -->
+             Wistia's iframe embed rather than <wistia-player>: an iframe is
+             self-contained, so eight of them cost no extra module scripts, and
+             .video-embed already sizes an iframe. None autoplay, on purpose. -->
         <div class="video-stack reveal">
 
-          <div class="video-embed">
-            <iframe src="https://fast.wistia.net/embed/iframe/pffiqpk2va?seo=true&amp;videoFoam=true"
-                    title="Am I reselling name brands or doing arbitrage/dropshipping?"
-                    allow="autoplay; fullscreen" allowfullscreen
-                    frameborder="0" scrolling="no"></iframe>
+          <div class="faq-video">
+            <h3 class="faq-video__q">How much capital do I need to get started?</h3>
+            <div class="video-embed">
+              <iframe src="https://fast.wistia.net/embed/iframe/pffiqpk2va?seo=true&amp;videoFoam=true"
+                      title="How much capital do I need to get started?"
+                      allow="autoplay; fullscreen" allowfullscreen
+                      frameborder="0" scrolling="no"></iframe>
+            </div>
           </div>
 
-          <!-- PLACEHOLDER: NEEDS YOUR COPY — the question this one answers.
-               These players carry no visible heading, so the iframe title is the
-               only thing a screen reader announces, and "Breakout video 2" tells
-               a non-sighted visitor nothing. Wistia calls it "Breakout Video 4
-               (1)", which is the name it gets from being duplicated, so it does
-               not identify the topic either. -->
-          <div class="video-embed">
-            <iframe src="https://fast.wistia.net/embed/iframe/mbvbe9gx24?seo=true&amp;videoFoam=true"
-                    title="Breakout video 2"
-                    allow="autoplay; fullscreen" allowfullscreen
-                    frameborder="0" scrolling="no"></iframe>
+          <div class="faq-video">
+            <h3 class="faq-video__q">Is this retail arbitrage, wholesale or dropshipping?</h3>
+            <div class="video-embed">
+              <iframe src="https://fast.wistia.net/embed/iframe/mbvbe9gx24?seo=true&amp;videoFoam=true"
+                      title="Is this retail arbitrage, wholesale or dropshipping?"
+                      allow="autoplay; fullscreen" allowfullscreen
+                      frameborder="0" scrolling="no"></iframe>
+            </div>
           </div>
 
-          <!-- Slots 2 and 3. Wistia calls these "Breakout Video 6" and "Breakout
-               Video 8" from the June set, so the names do NOT indicate position;
-               the running order below is what governs. Titles here are the only
-               label a screen reader gets, so if the two are the wrong way round
-               the fix is to swap the two src values, not the titles. -->
-
-          <div class="video-embed">
-            <iframe src="https://fast.wistia.net/embed/iframe/dqffpb5kzt?seo=true&amp;videoFoam=true"
-                    title="Can I fit this around my family, busy schedule, and current commitments?"
-                    allow="autoplay; fullscreen" allowfullscreen
-                    frameborder="0" scrolling="no"></iframe>
+          <div class="faq-video">
+            <h3 class="faq-video__q">Is this just another online course?</h3>
+            <div class="video-embed">
+              <iframe src="https://fast.wistia.net/embed/iframe/dqffpb5kzt?seo=true&amp;videoFoam=true"
+                      title="Is this just another online course?"
+                      allow="autoplay; fullscreen" allowfullscreen
+                      frameborder="0" scrolling="no"></iframe>
+            </div>
           </div>
 
-          <div class="video-embed">
-            <iframe src="https://fast.wistia.net/embed/iframe/i53y0guxno?seo=true&amp;videoFoam=true"
-                    title="What are realistic results and what does the long term look like?"
-                    allow="autoplay; fullscreen" allowfullscreen
-                    frameborder="0" scrolling="no"></iframe>
+          <div class="faq-video">
+            <h3 class="faq-video__q">Why not just buy a business from a broker myself?</h3>
+            <div class="video-embed">
+              <iframe src="https://fast.wistia.net/embed/iframe/i53y0guxno?seo=true&amp;videoFoam=true"
+                      title="Why not just buy a business from a broker myself?"
+                      allow="autoplay; fullscreen" allowfullscreen
+                      frameborder="0" scrolling="no"></iframe>
+            </div>
           </div>
 
-          <div class="video-embed">
-            <iframe src="https://fast.wistia.net/embed/iframe/zqgmduzmtk?seo=true&amp;videoFoam=true"
-                    title="Can a total beginner survive against experienced sellers and big brands?"
-                    allow="autoplay; fullscreen" allowfullscreen
-                    frameborder="0" scrolling="no"></iframe>
+          <div class="faq-video">
+            <h3 class="faq-video__q">Do I need to quit my job to do this?</h3>
+            <div class="video-embed">
+              <iframe src="https://fast.wistia.net/embed/iframe/zqgmduzmtk?seo=true&amp;videoFoam=true"
+                      title="Do I need to quit my job to do this?"
+                      allow="autoplay; fullscreen" allowfullscreen
+                      frameborder="0" scrolling="no"></iframe>
+            </div>
           </div>
 
-          <div class="video-embed">
-            <iframe src="https://fast.wistia.net/embed/iframe/pcwdo82aar?seo=true&amp;videoFoam=true"
-                    title="How much capital does it take to get started?"
-                    allow="autoplay; fullscreen" allowfullscreen
-                    frameborder="0" scrolling="no"></iframe>
+          <div class="faq-video">
+            <h3 class="faq-video__q">How long until the business pays me?</h3>
+            <div class="video-embed">
+              <iframe src="https://fast.wistia.net/embed/iframe/pcwdo82aar?seo=true&amp;videoFoam=true"
+                      title="How long until the business pays me?"
+                      allow="autoplay; fullscreen" allowfullscreen
+                      frameborder="0" scrolling="no"></iframe>
+            </div>
           </div>
 
-          <div class="video-embed">
-            <iframe src="https://fast.wistia.net/embed/iframe/7r1zws18z4?seo=true&amp;videoFoam=true"
-                    title="How long is the live training?"
-                    allow="autoplay; fullscreen" allowfullscreen
-                    frameborder="0" scrolling="no"></iframe>
+          <div class="faq-video">
+            <h3 class="faq-video__q">Will big brands and cheap overseas sellers crush me?</h3>
+            <div class="video-embed">
+              <iframe src="https://fast.wistia.net/embed/iframe/7r1zws18z4?seo=true&amp;videoFoam=true"
+                      title="Will big brands and cheap overseas sellers crush me?"
+                      allow="autoplay; fullscreen" allowfullscreen
+                      frameborder="0" scrolling="no"></iframe>
+            </div>
           </div>
 
-          <div class="video-embed">
-            <iframe src="https://fast.wistia.net/embed/iframe/1sqhc3mxl6?seo=true&amp;videoFoam=true"
-                    title="What if I can't attend live?"
-                    allow="autoplay; fullscreen" allowfullscreen
-                    frameborder="0" scrolling="no"></iframe>
+          <div class="faq-video">
+            <h3 class="faq-video__q">How do I know you actually run these businesses?</h3>
+            <div class="video-embed">
+              <iframe src="https://fast.wistia.net/embed/iframe/1sqhc3mxl6?seo=true&amp;videoFoam=true"
+                      title="How do I know you actually run these businesses?"
+                      allow="autoplay; fullscreen" allowfullscreen
+                      frameborder="0" scrolling="no"></iframe>
+            </div>
           </div>
 
         </div>

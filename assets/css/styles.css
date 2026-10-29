@@ -656,7 +656,8 @@ wistia-player[media-id='ejjhtlaboh']:not(:defined) { background-image: url('http
    jump on boot. */
 wistia-player[media-id='qtzd60x0s7']:not(:defined),
 wistia-player[media-id='nb4irg23tf']:not(:defined),
-wistia-player[media-id='vu4aaivfx4']:not(:defined) {
+wistia-player[media-id='vu4aaivfx4']:not(:defined),
+wistia-player[media-id='7cbytlrnqp']:not(:defined) {
   display: block;
   width: 100%;
   height: 100%;
@@ -668,6 +669,7 @@ wistia-player[media-id='vu4aaivfx4']:not(:defined) {
 wistia-player[media-id='qtzd60x0s7']:not(:defined) { background-image: url('https://fast.wistia.com/embed/medias/qtzd60x0s7/swatch'); }
 wistia-player[media-id='nb4irg23tf']:not(:defined) { background-image: url('https://fast.wistia.com/embed/medias/nb4irg23tf/swatch'); }
 wistia-player[media-id='vu4aaivfx4']:not(:defined) { background-image: url('https://fast.wistia.com/embed/medias/vu4aaivfx4/swatch'); }
+wistia-player[media-id='7cbytlrnqp']:not(:defined) { background-image: url('https://fast.wistia.com/embed/medias/7cbytlrnqp/swatch'); }
 
 /* consequence split */
 .split { display: grid; gap: var(--sp-3); grid-template-columns: 1fr; }

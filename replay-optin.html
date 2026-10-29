@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!-- REPLAY OPT-IN (/replay-optin). The gate people land on from the post-webinar
+     broadcast: urgency timer, the promise, and a locked replay they open by
+     giving their details.
+
+     The page is a GATE, so nothing on it loads the replay. What sits where the
+     player would go is .replay-teaser: the video's own poster frame, blurred,
+     with the opt-in button on top of it. Pressing that button opens the same
+     <dialog> the opt-in pages use, and only a valid submission moves anyone on.
+
+     data-confirm-page on <html> is what sends that submission to replay.html
+     instead of a confirmation page. It is the existing override igoptin.html
+     uses; see CONFIRMATION SPLIT in main.js. The capital question is not asked
+     here, so without the override this form would land on confirmednp.html.
+
+     Everything visual comes from assets/css/styles.css, so this page inherits
+     the site's type scale, orange accent, buttons and reveal animation with no
+     page-level styling of its own.
+
+     Base Meta Pixel + PageView only. No conversion events fire here; those stay
+     on confirmedp.html so the ad account keeps optimising toward registrations. -->
+<html lang="en" data-confirm-page="replay.html">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '[PLACEHOLDER_META_PIXEL_ID]');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=[PLACEHOLDER_META_PIXEL_ID]&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  <title>Watch the replay &middot; The Brand Operator</title>
+  <meta name="robots" content="noindex" />
+
+  <!-- Placed before the stylesheet on purpose: it hides the page until
+       Humblytics calls window._hmblReveal(), so it must run before first paint.
+       The 2000ms setTimeout is the failsafe that reveals the page if the script
+       never loads (ad blocker, outage). See README section 8. -->
+  <!-- Start Humblytics Tracking Code -->
+  <script>
+    (function(){
+      document.documentElement.style.opacity='0';
+      window._hmblReveal=function(){ document.documentElement.style.opacity='1'; };
+      setTimeout(window._hmblReveal, 2000);
+    })();
+  </script>
+  <script async src="https://app.humblytics.com/hmbl.min.js?id=[PLACEHOLDER_HUMBLYTICS_ID]"></script>
+  <!-- End Humblytics Tracking Code -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+
+  <main>
+
+    <!-- =================================================================== -->
+    <!-- HERO: the promise and the locked replay                             -->
+    <!-- No countdown: the replay is evergreen (replayDeadlineISO is empty).  -->
+    <!-- =================================================================== -->
+    <section class="hero hero--top hero--replay" aria-labelledby="hero-title">
+      <div class="container center">
+        <span class="pill pill--breathe reveal">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="pill-text"><!-- PLACEHOLDER -->For those who missed the live training</span>
+        </span>
+
+        <h1 id="hero-title" class="reveal">
+          <!-- PLACEHOLDER -->Watch the full <span class="hl">live training</span> replay
+        </h1>
+        <p class="subhead reveal">
+          <!-- PLACEHOLDER -->You missed the live training, but you still have a chance. Watch the
+          full replay below.
+        </p>
+
+        <!-- The locked replay. .replay-teaser is a poster and a button, never a
+             player: initReplayTeaser() in main.js paints CFG.replayVideoId's
+             Wistia swatch behind it, and the CSS blurs that layer only, so the
+             button and label on top stay sharp. data-open-register is the same
+             hook the opt-in pages use, so this opens the dialog below. -->
+        <div class="replay-teaser reveal" data-replay-teaser>
+          <div class="replay-teaser__poster" data-replay-poster aria-hidden="true"></div>
+          <div class="replay-teaser__veil" aria-hidden="true"></div>
+          <div class="replay-teaser__body">
+            <span class="replay-teaser__play" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+            <p class="replay-teaser__label">
+              <!-- PLACEHOLDER -->The full session is ready to watch
+            </p>
+            <button class="btn btn--block btn--fx" type="button" data-open-register>
+              <span class="btn-label"><!-- PLACEHOLDER -->Unlock the replay</span>
+              <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+            </button>
+            <p class="replay-teaser__note">
+              <!-- PLACEHOLDER -->Tell us where to send it. Takes about ten seconds.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <!-- PLACEHOLDER START: footer disclaimers -->
+      <p class="disclaimer">
+        This site is not part of, or endorsed by, Facebook, Instagram, or Meta Platforms, Inc.
+        FACEBOOK and INSTAGRAM are trademarks of Meta Platforms, Inc.
+      </p>
+      <p class="disclaimer">
+        Earnings and results disclaimer: this training is educational. We do not guarantee any income
+        or specific outcome. Any figures or student results mentioned are illustrative and are not
+        typical. Building an Amazon business takes work, time, and capital, and involves risk,
+        including the risk of loss. Your results depend on your own effort, decisions, and market
+        conditions.
+      </p>
+      <!-- PLACEHOLDER END -->
+      <p>
+        <small>&copy; <span data-cfg="year">2026</span> Eman LA / The Brand Operator. All rights reserved.</small>
+      </p>
+      <div class="footer-links">
+        <a href="#" data-cfg-href="privacyUrl"><!-- PLACEHOLDER -->Privacy Policy</a>
+        <a href="#" data-cfg-href="termsUrl"><!-- PLACEHOLDER -->Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =================================================================== -->
+  <!-- OPT-IN DIALOG                                                       -->
+  <!-- Same component and the same initForm() gate as the opt-in pages, so  -->
+  <!-- validation, the phone rules, attribution, the honeypot and the       -->
+  <!-- webhook retry queue all behave identically here.                     -->
+  <!--                                                                      -->
+  <!-- Name, email and phone ONLY. The capital question is deliberately not  -->
+  <!-- asked: this is a replay gate, not an application, and initForm skips  -->
+  <!-- the capital check when the radios are absent.                         -->
+  <!-- =================================================================== -->
+  <dialog class="modal" id="register-modal" aria-label="Unlock the replay">
+    <div class="modal-inner">
+      <button class="modal-close" type="button" aria-label="Close the form">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+
+      <form novalidate>
+        <!-- Two columns. Names are short enough to share a row even at 375px,
+             and it buys ~90px of height, which is what lets the whole form sit
+             on one phone screen without scrolling inside the dialog. -->
+        <div class="field-row">
+          <div class="field">
+            <label for="reg-firstname">First name</label>
+            <input id="reg-firstname" name="firstname" type="text" autocomplete="given-name" required aria-describedby="reg-firstname-error" />
+            <span class="error-msg" id="reg-firstname-error" role="alert">Please enter your first name.</span>
+          </div>
+          <div class="field">
+            <label for="reg-lastname">Last name</label>
+            <input id="reg-lastname" name="lastname" type="text" autocomplete="family-name" required aria-describedby="reg-lastname-error" />
+            <span class="error-msg" id="reg-lastname-error" role="alert">Please enter your last name.</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="reg-email">Email</label>
+          <input id="reg-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="reg-email-error" />
+          <span class="error-msg" id="reg-email-error" role="alert">Please enter a valid email address.</span>
+        </div>
+        <div class="field">
+          <label for="reg-phone">Phone</label>
+          <!-- Country code and number are two controls that read as one. The
+               picker is built at runtime from assets/js/countries.js; the single
+               option below is the fallback if that file fails to load. -->
+          <div class="tel-group">
+            <div class="select-wrap tel-cc">
+              <select id="reg-phone-cc" name="phone_country_code" aria-label="Country code" autocomplete="tel-country-code">
+                <option value="+1" title="United States" selected>🇺🇸 +1</option>
+              </select>
+            </div>
+            <input id="reg-phone" name="phone" type="tel" autocomplete="tel-national" inputmode="numeric" maxlength="10" required aria-describedby="reg-phone-hint reg-phone-error" />
+          </div>
+          <!-- Which country was picked. Dial codes are not unique (+1 is the US,
+               Canada and ~22 more), so the ISO code is what the dashboard needs. -->
+          <input type="hidden" name="phone_country_iso" value="US" />
+          <span class="hint" id="reg-phone-hint">For text reminders only. We will not share your number.</span>
+          <span class="error-msg" id="reg-phone-error" role="alert">Please enter a valid phone number for the country you picked.</span>
+        </div>
+
+        <!-- ATTRIBUTION / TRACKING (hidden, never shown to the visitor).
+             Populated by initAttribution() in assets/js/main.js. Same set as the
+             opt-in pages; the relay forwards them all by safe-key, so this list
+             and the dashboard stay in step with no relay edit.
+             Do not add PII here; these are campaign identifiers only. -->
+        <input type="hidden" name="utm_source" data-attr="utm_source" />
+        <input type="hidden" name="utm_medium" data-attr="utm_medium" />
+        <input type="hidden" name="utm_campaign" data-attr="utm_campaign" />
+        <input type="hidden" name="utm_content" data-attr="utm_content" />
+        <input type="hidden" name="utm_term" data-attr="utm_term" />
+        <input type="hidden" name="campaign_id" data-attr="campaign_id" />
+        <input type="hidden" name="campaign_name" data-attr="campaign_name" />
+        <input type="hidden" name="adset_id" data-attr="adset_id" />
+        <input type="hidden" name="adset_name" data-attr="adset_name" />
+        <input type="hidden" name="ad_id" data-attr="ad_id" />
+        <input type="hidden" name="ad_name" data-attr="ad_name" />
+        <input type="hidden" name="placement" data-attr="placement" />
+        <input type="hidden" name="site_source_name" data-attr="site_source_name" />
+        <input type="hidden" name="meta_lead_event_id" data-attr="meta_lead_event_id" />
+        <input type="hidden" name="meta_submit_event_id" data-attr="meta_submit_event_id" />
+        <input type="hidden" name="meta_complete_event_id" data-attr="meta_complete_event_id" />
+        <input type="hidden" name="_fbc" data-attr="_fbc" />
+        <input type="hidden" name="_fbp" data-attr="_fbp" />
+        <input type="hidden" name="fbclid" data-attr="fbclid" />
+        <input type="hidden" name="client_ip_address" data-attr="client_ip_address" />
+
+        <!-- Marks which page the lead came from, so a replay opt-in is tellable
+             from a registration in the dashboard without reading pageUrl. -->
+        <input type="hidden" name="optin_type" value="replay" />
+
+        <!-- Which webinar this lead signed up for, e.g. "August 13th Webinar".
+             Derived in main.js from webinarISO and written here by
+             data-cfg-value, so it re-tags itself when the webinar date moves.
+             Sent as webinar_date for GHL / ActiveCampaign tagging. -->
+        <input type="hidden" name="webinar_date" data-cfg-value="webinarTag" />
+        <!-- Same date, phrased as the action, e.g. "August 13th webinar opt in".
+             Kept as its own field so the CRM can carry a "what they did" tag
+             separately from a "which webinar" tag. -->
+        <input type="hidden" name="webinar_optin_tag" data-cfg-value="webinarOptinTag" />
+
+        <!-- Bot trap. Positioned off-screen rather than display:none, because
+             bots skip hidden inputs but happily fill visible-to-the-DOM ones.
+             A real visitor can never reach it (tabindex -1, aria-hidden), so any
+             value means automation and the relay silently drops the submission.
+             Do not add a visible label, do not change the name. -->
+        <div class="hp" aria-hidden="true">
+          <label for="reg-website">Website</label>
+          <input id="reg-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <!-- Pinned to the bottom of the dialog while it scrolls, so an open
+             keyboard can never bury the button. See .modal-actions in the CSS. -->
+        <div class="modal-actions">
+          <button class="btn btn--block btn--fx" type="submit">
+            <span class="btn-label"><!-- PLACEHOLDER -->Watch the replay</span>
+            <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+          </button>
+          <p class="form-foot"><!-- PLACEHOLDER -->No spam. You can unsubscribe at any time.</p>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <script src="assets/js/countries.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

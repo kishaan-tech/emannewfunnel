@@ -1,0 +1,37 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Local server / scratch
+*.log
+
+# Raw testimonial source material (~875MB, includes .MOV files far over
+# GitHub's 100MB per-file limit). The web-sized copies that the page actually
+# uses are committed under assets/img/results/.
+assets/testimonials/
+
+# Full-resolution camera originals dropped into assets/img/. A 3072x4608 JPEG is
+# ~9MB, and a static host would happily serve it to a phone. Commit the resized
+# web copy next to it instead (eman-speaking.jpg is the 800px copy of DSC00028).
+assets/img/DSC*.JPEG
+assets/img/DSC*.jpeg
+assets/img/DSC*.JPG
+
+# Same idea for screenshots dropped in as source material. The page never links
+# one directly; what ships is the crop made from it (assets/img/avatars/).
+assets/img/Screenshot*.png
+
+# Secrets and host tooling. `vercel env pull` writes .env.local by default;
+# committing it once puts the signing secret in git history permanently.
+.env
+.env.*
+!.env.example
+.vercel/
+.netlify/
+node_modules/
+
+# competitor research downloads (third-party assets, never deploy)
+research/

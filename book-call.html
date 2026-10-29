@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!-- BOOK A CALL (/book-call). Heading, one line of context, and the booking
+     calendar. Deliberately the plainest page in the funnel: nothing here should
+     compete with picking a time.
+
+     Structure mirrors the reference funnel section for section; everything
+     visual comes from assets/css/styles.css, so this page inherits the site's
+     type scale, orange accent, buttons and reveal animation with no page-level
+     styling of its own. Proof is built from OUR assets (the Wistia clips, the
+     Timmy case study, the result screenshots) rather than ported copy.
+
+     Base Meta Pixel + PageView only. No conversion events fire here; those stay
+     on confirmedp.html so the ad account keeps optimising toward registrations.
+     Keep in step with confirmednp.html if the shared shell changes. -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '[PLACEHOLDER_META_PIXEL_ID]');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=[PLACEHOLDER_META_PIXEL_ID]&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  <title>Book your call &middot; The Brand Operator</title>
+  <meta name="robots" content="noindex" />
+
+  <!-- Placed before the stylesheet on purpose: it hides the page until
+       Humblytics calls window._hmblReveal(), so it must run before first paint.
+       The 2000ms setTimeout is the failsafe that reveals the page if the script
+       never loads (ad blocker, outage). See README section 8. -->
+  <!-- Start Humblytics Tracking Code -->
+  <script>
+    (function(){
+      document.documentElement.style.opacity='0';
+      window._hmblReveal=function(){ document.documentElement.style.opacity='1'; };
+      setTimeout(window._hmblReveal, 2000);
+    })();
+  </script>
+  <script async src="https://app.humblytics.com/hmbl.min.js?id=[PLACEHOLDER_HUMBLYTICS_ID]"></script>
+  <!-- End Humblytics Tracking Code -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <!-- Wistia player runtime. Loaded ONCE for the whole page; the individual
+       videos each pull their own media module next to their markup below. -->
+  <script src="https://fast.wistia.com/player.js" async></script>
+</head>
+<body>
+
+  <main>
+
+    <!-- =================================================================== -->
+    <!-- BOOK A CALL                                                         -->
+    <!-- =================================================================== -->
+    <section class="hero hero--top" aria-labelledby="book-title">
+      <div class="container center">
+        <span class="pill pill--breathe reveal">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="pill-text"><!-- PLACEHOLDER -->For the action takers from the live training</span>
+        </span>
+        <h1 id="book-title" class="reveal">
+          Schedule your <span class="hl">application call</span> below
+        </h1>
+        <p class="subhead reveal">
+          <!-- PLACEHOLDER -->Pick a time that works and you will speak with someone on the team
+          about your product, your capital and whether this is the right next step.
+        </p>
+      </div>
+    </section>
+
+    <!-- The booking widget: iClosed's inline embed. The .iclosed-widget div and
+         their loader are both written by initBookingEmbed() from CFG.bookCallUrl,
+         so the calendar link lives in config like every other editable value and
+         is never hardcoded into the markup. -->
+    <section aria-labelledby="calendar-title" style="padding-top:0">
+      <div class="container">
+        <h2 id="calendar-title" class="sr-only">Choose a time</h2>
+        <div class="booking-embed booking-embed--bare reveal" data-booking-embed></div>
+
+        <!-- The policy links sit HERE, directly under the calendar, rather than
+             in a <footer> below it. This page has no footer at all: the Meta and
+             earnings disclaimers and the copyright line were removed by request
+             so nothing competes with picking a time, which left a bordered
+             footer band holding two links and nothing else. Every other page in
+             the funnel still carries the full site-footer, so do not read this
+             as the shared pattern or propagate it when the footer changes. -->
+        <nav class="footer-links booking-legal" aria-label="Legal">
+          <a href="#" data-cfg-href="privacyUrl"><!-- PLACEHOLDER -->Privacy Policy</a>
+          <a href="#" data-cfg-href="termsUrl"><!-- PLACEHOLDER -->Terms</a>
+        </nav>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

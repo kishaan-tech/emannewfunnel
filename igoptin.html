@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<!-- ORGANIC (Instagram) variant of fboptin.html. Same page, no Meta Pixel,
+     no Meta attribution fields. data-organic tells main.js to skip the Meta
+     half of the attribution module; data-confirm-page overrides the yes/no
+     confirmation split, since organic has exactly one confirmation page.
+     Keep this file in step with fboptin.html when either one changes. -->
+<html lang="en" data-organic data-confirm-page="confirmedig.html">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>The Brand Operator · Free Live Amazon Training with Emanuel Ruiz</title>
+  <meta name="description" content="[PLACEHOLDER: A free live training on building a real Amazon brand from scratch, with an operator guiding the decisions that actually cost money.]" />
+
+
+  <!-- Placed before the stylesheet on purpose: it hides the page until
+       Humblytics calls window._hmblReveal(), so it must run before first paint.
+       The 2000ms setTimeout is the failsafe that reveals the page if the script
+       never loads (ad blocker, outage). See README section 8. -->
+  <!-- Start Humblytics Tracking Code -->
+  <script>
+    (function(){
+      document.documentElement.style.opacity='0';
+      window._hmblReveal=function(){ document.documentElement.style.opacity='1'; };
+      setTimeout(window._hmblReveal, 2000);
+    })();
+  </script>
+  <script async src="https://app.humblytics.com/hmbl.min.js?id=[PLACEHOLDER_HUMBLYTICS_ID]"></script>
+  <!-- End Humblytics Tracking Code -->
+
+  <!-- Font: Instrument Sans (Google). It ships 400-700 only, so 700 is the site's
+       bold everywhere; see the --font note in styles.css. System sans is the fallback. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <!-- Wistia player runtime. Loaded ONCE for the whole page; the individual
+       videos each pull their own media module next to their markup below. -->
+  <script src="https://fast.wistia.com/player.js" async></script>
+</head>
+<body>
+
+  <main>
+
+    <!-- =================================================================== -->
+    <!-- HERO                                                                -->
+    <!-- The brand wordmark/logo bar was removed, so this pill is now the     -->
+    <!-- first thing on the page. .hero--top trims the space above it.        -->
+    <!-- =================================================================== -->
+    <section class="hero hero--top" aria-labelledby="hero-title">
+      <div class="container center">
+
+        <span class="pill pill--breathe reveal">
+          <span class="dot" aria-hidden="true"></span>
+          <!-- PLACEHOLDER START: hero pill -->
+          <span class="pill-text">Free Live Training · <span data-cfg="webinarDateLabel">September 17, 2026</span> at <span data-cfg="webinarTimeLabel">8:00 PM</span> <span data-cfg="timezoneLabel">ET / 5:00 PM PT</span></span>
+          <!-- PLACEHOLDER END -->
+        </span>
+
+        <!-- Client-supplied final copy (no longer placeholder). Straight quotes and
+             &amp; per the house style; the .hl span is the standard hero emphasis. -->
+        <h1 id="hero-title" class="reveal">
+          Eight figure brand owner reveals: Build a cash flowing e-commerce brand
+          using saturation to find <span class="hl"><em>profit pockets</em></span>
+          that big brands ignore
+        </h1>
+        <p class="subhead reveal">
+          Without directly competing against them, spending more than 20 hours per week, trading
+          your time for money, or wasting time guessing what products to deploy your capital into -
+          All while AI does the manual grunt work for you
+        </p>
+
+        <div class="hero-scarcity">
+
+          <!-- scarcity stack -->
+          <div class="scarcity-stack reveal">
+
+            <!-- Countdown + primary CTA, one card, above the capacity meter.
+                 The urgency and the action now sit together so the visitor does
+                 not have to travel past a second card to act on the timer. -->
+            <div class="card countdown-cta">
+              <div class="countdown-label" aria-hidden="true">Training starts in</div>
+              <div class="countdown" data-countdown></div>
+              <span class="sr-only">Training begins on <span data-cfg="webinarDateLabel">September 17, 2026</span> at <span data-cfg="webinarTimeLabel">8:00 PM</span> <span data-cfg="timezoneLabel">ET / 5:00 PM PT</span>.</span>
+
+              <div class="cta-cluster">
+                <button class="btn btn--block btn--fx" type="button" data-open-register>
+                  <span class="btn-label"><!-- PLACEHOLDER: CTA -->Save my seat</span>
+                  <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+                </button>
+                <p class="cta-microcopy">
+                  <!-- PLACEHOLDER -->Limited spots. Registration closes when the room fills.
+                </p>
+                <div class="social-proof">
+                  <span class="avatars" data-avatars aria-hidden="true"></span>
+                  <span class="stars" data-stars aria-hidden="true"></span>
+                  <span class="proof-label">Trusted by
+                    <strong data-cfg="socialProofCount">50+</strong>
+                    <span data-cfg="socialProofLabel">operators</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live room capacity -->
+            <div class="card">
+              <div class="meter-head">
+                <div class="meter-label">Live room capacity</div>
+                <span class="live-badge" data-live-badge hidden><span class="live-dot" aria-hidden="true"></span>Live</span>
+              </div>
+              <div class="seat-grid" data-seat-grid></div>
+              <div class="meter-caption" data-seats-remaining>
+                <span class="num">53</span> spots remaining
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- WHAT WE'LL COVER                                                    -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="cover-title">
+      <div class="container">
+        <div class="card reveal">
+          <div class="section-head">
+            <!-- Client-supplied final copy. The day is injected from config
+                 (webinarDayLabel) rather than hardcoded, so moving the webinar
+                 does not leave a stale day behind. -->
+            <h2 id="cover-title">Here's What We'll Be Revealing <span class="hl">LIVE ON <span data-cfg="webinarDayLabel">THURSDAY</span></span></h2>
+          </div>
+
+          <!-- Client-supplied final copy. Layout, connector and icons unchanged. -->
+          <ul class="timeline" data-timeline>
+
+            <li class="tl-item">
+              <span class="tl-badge">
+                <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+              </span>
+              <span class="tl-text">
+                <span class="tl-copy"><strong>Why building a brand using AI and taking advantage of saturation is the most lucrative opportunity for high earners with deployable capital in 2026 to build a real asset with brand equity that can be sold</strong> ... and why people will happily and continuously pay for products that solve their specific problems.</span>
+              </span>
+            </li>
+
+            <li class="tl-item">
+              <span class="tl-badge">
+                <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+              </span>
+              <span class="tl-text">
+                <span class="tl-copy"><strong>Why opportunities like Airbnb, crypto, and old ways of doing ecommerce like dropshipping all trade your time for money and have low profit margins</strong> ... and why building your own brand with AI by finding profit pockets is structurally more time and capital efficient.</span>
+              </span>
+            </li>
+
+            <li class="tl-item">
+              <span class="tl-badge">
+                <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+              </span>
+              <span class="tl-text">
+                <span class="tl-copy"><strong>The multimillion dollar playbook where shipping, warehousing, customer service, and returns are all handled for you</strong> so you focus on the revenue-driven actions that take 15 to 20 hours a week at the peak and actually move the needle.</span>
+              </span>
+            </li>
+
+            <li class="tl-item">
+              <span class="tl-badge">
+                <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+              </span>
+              <span class="tl-text">
+                <span class="tl-copy"><strong>How to find profit pockets within saturated markets where demand is already proven but nobody is serving it properly</strong> so you can hijack existing demand instead of reinventing the wheel and competing against big brands you can't beat.</span>
+              </span>
+            </li>
+
+            <li class="tl-item">
+              <span class="tl-badge">
+                <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+              </span>
+              <span class="tl-text">
+                <span class="tl-copy"><strong>The four-step filter that identifies which pockets within bigger industries are worth deploying your capital into</strong> so you know a niche is worth entering before you put a dollar into it.</span>
+              </span>
+            </li>
+
+            <li class="tl-item">
+              <span class="tl-badge">
+                <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+              </span>
+              <span class="tl-text">
+                <span class="tl-copy"><strong>The three mistakes that quietly cost people thousands before their first sale</strong> so the capital you're putting in doesn't disappear by following outdated playbooks.</span>
+              </span>
+            </li>
+
+            <li class="tl-item">
+              <span class="tl-badge">
+                <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+                <span class="confetti-layer" aria-hidden="true"></span>
+              </span>
+              <span class="tl-text">
+                <span class="tl-copy"><strong>The Product Launch Blueprint: A to Z from order placed to first profitable month</strong> so you know exactly what happens next instead of guessing at every step, while AI handles the time-consuming work like product research and listing creation so you are not grinding through manual tasks at midnight.</span>
+              </span>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- CTA CLUSTER (directly below the "revealing live" timeline)          -->
+    <!-- =================================================================== -->
+    <section>
+      <div class="container">
+        <div class="cta-cluster reveal">
+          <button class="btn btn--fx" type="button" data-open-register><span class="btn-label">YES! SAVE MY SPOT NOW!</span><span class="btn-arrow" aria-hidden="true">&rarr;</span></button>
+          <p class="cta-microcopy"><!-- PLACEHOLDER -->Limited spots. Registration closes when the room fills.</p>
+          <div class="social-proof">
+            <span class="avatars" data-avatars aria-hidden="true"></span>
+            <span class="stars" data-stars aria-hidden="true"></span>
+            <span class="proof-label">Trusted by <strong data-cfg="socialProofCount">50+</strong> <span data-cfg="socialProofLabel">operators</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- MEET YOUR HOST                                                      -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="host-title">
+      <div class="container">
+        <div class="card reveal">
+          <div class="two-col media-right">
+            <div class="media">
+              <div class="media-frame">
+                <!-- Web copy of DSC00028.JPEG, cropped 2:3 to 4:5 and resized to
+                     800px wide. .media-frame sets no aspect ratio, so the image's
+                     own proportions drive how tall this card gets on mobile; the
+                     original would have run half a screen taller. -->
+                <img src="assets/img/eman-speaking.jpg" width="800" height="1000" loading="lazy" decoding="async"
+                     alt="Emanuel Ruiz speaking into a handheld microphone at a live event, one hand raised mid-explanation, in front of a projected slide." />
+              </div>
+            </div>
+            <div>
+              <div class="pill" style="margin-bottom:var(--sp-2)">Meet your host</div>
+              <h2 id="host-title" data-cfg="hostName">Emanuel Ruiz</h2>
+              <!-- PLACEHOLDER START: host bio -->
+              <p class="ink-soft">
+                Hosted by 8 figure seller Emanuel Ruiz, former real estate agent turned brand
+                operator. He has built multiple brands from scratch, managed over $20M in combined
+                brand revenue, and exited 2 of them.
+              </p>
+              <p class="ink-soft">
+                He now works with high earning professionals who want to deploy their capital into
+                a real asset they own, to build something that cash flows without them being in the
+                room instead of trading more hours for money.
+              </p>
+              <!-- PLACEHOLDER END -->
+
+              <!-- PLACEHOLDER START: outcomes -->
+              <ul class="check-list outcome-list" style="margin-top:var(--sp-3)">
+                <li class="check-item">
+                  <span class="check-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+                  <span class="line">Build a real Amazon business</span>
+                </li>
+                <li class="check-item">
+                  <span class="check-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+                  <span class="line">Earn without pretending it is passive</span>
+                </li>
+                <li class="check-item">
+                  <span class="check-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+                  <span class="line">Have experienced eyes on every big decision</span>
+                </li>
+              </ul>
+              <!-- PLACEHOLDER END -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- CTA CLUSTER                                                         -->
+    <!-- Follows the host section, which now sits above the bonuses. -->
+    <!-- =================================================================== -->
+    <section>
+      <div class="container">
+        <div class="cta-cluster reveal">
+          <button class="btn btn--fx" type="button" data-open-register><span class="btn-label">YES! SAVE MY SPOT NOW!</span><span class="btn-arrow" aria-hidden="true">&rarr;</span></button>
+          <p class="cta-microcopy"><!-- PLACEHOLDER -->Limited spots. Registration closes when the room fills.</p>
+          <div class="social-proof">
+            <span class="avatars" data-avatars aria-hidden="true"></span>
+            <span class="stars" data-stars aria-hidden="true"></span>
+            <span class="proof-label">Trusted by <strong data-cfg="socialProofCount">50+</strong> <span data-cfg="socialProofLabel">operators</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- FREE BONUSES                                                        -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="bonus-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 id="bonus-title">Four Things You Get For Showing Up Live</h2>
+        </div>
+
+        <!-- PLACEHOLDER START: bonuses -->
+        <!-- No `reveal` class on these cards on purpose: this grid has its own
+             observer (initBonusGrid, keyed off [data-bonus-grid] + .is-in). Two
+             observers on the same elements would fight.
+             --i is the stagger index, so it has to run 0..3 in DOM order. -->
+        <div class="bonus-grid bonus-grid--4" data-bonus-grid>
+
+          <!-- 1. flag + warning -->
+          <div class="card bonus" style="--i:0">
+            <div class="icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 21V4"/>
+                <path d="M4 4h13l-2.2 3.5L17 11H4"/>
+                <circle cx="18.5" cy="17.5" r="3.5"/>
+                <path d="M18.5 15.8v1.9M18.5 19.4h.01"/>
+              </svg>
+            </div>
+            <h3>The Supplier Red Flag Checklist</h3>
+            <p>What Eman checks before wiring money to a factory he's never met. Certifications, sample protocol, payment terms, and the signals that tell you a supplier is going to cost you.</p>
+          </div>
+
+          <!-- 2. price tag with a downward arrow: price per unit coming down -->
+          <div class="card bonus" style="--i:1">
+            <div class="icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12.6 2.6A2 2 0 0 0 11.2 2H4.4A2.4 2.4 0 0 0 2 4.4v6.8a2 2 0 0 0 .6 1.4l8.5 8.5a2.3 2.3 0 0 0 3.3 0l6.4-6.4a2.3 2.3 0 0 0 0-3.3z"/>
+                <circle cx="7.2" cy="7.2" r="1.15"/>
+                <path d="M13.4 10.2v4.4M11.5 12.7l1.9 1.9 1.9-1.9"/>
+              </svg>
+            </div>
+            <h3>The Supplier Negotiation Guide</h3>
+            <p>The scripts Eman uses to bring the price per unit down. Your margins are the lifeblood of your brand, and a few dollars off each unit saves thousands over a single order and earns you far more.</p>
+          </div>
+
+          <!-- 3. chart + magnifier -->
+          <div class="card bonus" style="--i:2">
+            <div class="icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 20h18"/>
+                <path d="M6 20v-5M10.5 20v-9M15 20v-4"/>
+                <circle cx="17.8" cy="7.2" r="3.4"/>
+                <path d="M20.4 9.8L22.5 12"/>
+              </svg>
+            </div>
+            <h3>The Demand Validation Checklist</h3>
+            <p>How to confirm real demand exists in a pocket within a saturated market before you deploy a dollar of capital. The data that tells you whether buyers are actually there, so you validate with numbers instead of a guess.</p>
+          </div>
+
+          <!-- 4. chat/question. Carries the orange fill and the MOST VALUED badge -->
+          <div class="card bonus bonus--featured" style="--i:3">
+            <span class="tag">Most valued</span>
+            <div class="icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12a8 8 0 0 1-11.5 7.2L4 21l1.8-5.5A8 8 0 1 1 21 12z"/>
+                <path d="M9.2 9.6a2.8 2.8 0 0 1 5.4.9c0 1.9-2.7 2.3-2.7 3.9"/>
+                <path d="M12 17.2h.01"/>
+              </svg>
+            </div>
+            <h3>Live Q&amp;A with Eman</h3>
+            <p>When the training's done, Eman opens the floor for a private LIVE Q&amp;A session and answers your questions live so you can get clarity on what we covered.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- CTA CLUSTER                                                         -->
+    <!-- =================================================================== -->
+    <section>
+      <div class="container">
+        <div class="cta-cluster reveal">
+          <button class="btn btn--fx" type="button" data-open-register><span class="btn-label"><!-- PLACEHOLDER -->Save my seat</span><span class="btn-arrow" aria-hidden="true">&rarr;</span></button>
+          <p class="cta-microcopy"><!-- PLACEHOLDER -->Limited spots. Registration closes when the room fills.</p>
+          <div class="social-proof">
+            <span class="avatars" data-avatars aria-hidden="true"></span>
+            <span class="stars" data-stars aria-hidden="true"></span>
+            <span class="proof-label">Trusted by <strong data-cfg="socialProofCount">50+</strong> <span data-cfg="socialProofLabel">operators</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SOCIAL PROOF / RESULTS                                              -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="results-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <!-- Client-supplied final copy, kept identical to the confirmation
+               pages so the proof reads the same on both sides of the opt-in. -->
+          <h2 id="results-title">Results From Members Inside The Brand Operator Who Were Exactly Where You Are</h2>
+          <p class="ink-soft">Take a look at what members inside the community who are no different than you were able to achieve through a support system and the right blueprint</p>
+        </div>
+
+        <!-- Long-form case study leads the section, short-form proof follows. -->
+<div class="case-study card reveal">
+          <div class="case-study__video">
+            <div class="video-embed">
+              <iframe src="https://www.youtube.com/embed/h1sWu42xnZA?si=S-hJmq1dXFmixQr4"
+                      title="Timmy: from zero to 1,000 dollar days" loading="lazy"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerpolicy="strict-origin-when-cross-origin"
+                      allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="case-study__body">
+            <span class="vt-headline">Timmy 0 - $1000 days</span>
+            <p class="case-study__context">A first-time seller who expected to lose money on his
+            test order.</p>
+            <p class="case-study__label">After joining Brand Operator</p>
+            <ul class="check-list">
+              <li class="check-item"><span class="check-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="line">Hit $1,000 a day within his first week</span></li>
+              <li class="check-item"><span class="check-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="line">Over $6,000 and 100-plus units in his first seven days of launch</span></li>
+              <li class="check-item"><span class="check-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="line">Profitable on the test order he expected to lose money on</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- short form: videos and screenshots, two per row -->
+        <div class="proof-grid reveal">
+
+          <figure class="vt-item vt-item--stacked">
+            <div class="vt-frame">
+              <script src="https://fast.wistia.com/embed/r185w1sed0.js" async type="module"></script>
+              <wistia-player media-id="r185w1sed0" aspect="0.5625"></wistia-player>
+            </div>
+            <figcaption>
+              <span class="vt-headline">Allan - from 2000 to 20000 a month in revenue</span>
+              Stuck at $2,000 a month, he scaled past $20,000 a month, mostly by avoiding the manufacturing, listing, and PPC mistakes that quietly drain cash.
+            </figcaption>
+          </figure>
+
+          <figure class="vt-item vt-item--stacked">
+            <div class="vt-frame">
+              <script src="https://fast.wistia.com/embed/ejjhtlaboh.js" async type="module"></script>
+              <wistia-player media-id="ejjhtlaboh" aspect="0.5625"></wistia-player>
+            </div>
+            <figcaption>
+              <span class="vt-headline">From almost unprofitable to 35% margins</span>
+              A beginner who was unprofitable and unsure, until he could get direct feedback in the community. Six to eight months later he's at a 35% net margin and launching new products.
+            </figcaption>
+          </figure>
+
+          <!-- Mobile-only CTA. .proof-grid is one column below 620px, so this
+               lands between testimonials; at 620px+ it is display:none. -->
+          <div class="proof-cta">
+            <button class="btn btn--fx btn--block" type="button" data-open-register><span class="btn-label"><!-- PLACEHOLDER -->Save my seat</span><span class="btn-arrow" aria-hidden="true">&rarr;</span></button>
+            <p class="cta-microcopy"><!-- PLACEHOLDER -->Limited spots. Registration closes when the room fills.</p>
+            <div class="social-proof">
+              <span class="avatars" data-avatars aria-hidden="true"></span>
+              <span class="stars" data-stars aria-hidden="true"></span>
+              <span class="proof-label">Trusted by <strong data-cfg="socialProofCount">50+</strong> <span data-cfg="socialProofLabel">operators</span></span>
+            </div>
+          </div>
+
+          <div class="media-frame"><img src="assets/img/results/result-01.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Amazon Seller app dashboard showing 443.3K USD in product sales over the last 30 days." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-02.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Amazon Seller app dashboard showing 500.2K USD in product sales this month, up 33 percent." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-03.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Student Wins post showing 290.7K USD in product sales over twelve months, up 176 percent." /></div>
+
+          <!-- Mobile-only CTA. .proof-grid is one column below 620px, so this
+               lands between testimonials; at 620px+ it is display:none. -->
+          <div class="proof-cta">
+            <button class="btn btn--fx btn--block" type="button" data-open-register><span class="btn-label"><!-- PLACEHOLDER -->Save my seat</span><span class="btn-arrow" aria-hidden="true">&rarr;</span></button>
+            <p class="cta-microcopy"><!-- PLACEHOLDER -->Limited spots. Registration closes when the room fills.</p>
+            <div class="social-proof">
+              <span class="avatars" data-avatars aria-hidden="true"></span>
+              <span class="stars" data-stars aria-hidden="true"></span>
+              <span class="proof-label">Trusted by <strong data-cfg="socialProofCount">50+</strong> <span data-cfg="socialProofLabel">operators</span></span>
+            </div>
+          </div>
+          <div class="media-frame"><img src="assets/img/results/result-04.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Student message reading 'Finished the month strong, 12k in rev', with a dashboard showing 12.01K USD over 30 days." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-05.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Student Wins post captioned 'This brand came back from the dead', showing 5,749 USD this month, up 951 percent." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-06.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Amazon Seller dashboard showing 314.3K USD over twelve months, up 184 percent." /></div>
+
+          <!-- Mobile-only CTA. .proof-grid is one column below 620px, so this
+               lands between testimonials; at 620px+ it is display:none. -->
+          <div class="proof-cta">
+            <button class="btn btn--fx btn--block" type="button" data-open-register><span class="btn-label"><!-- PLACEHOLDER -->Save my seat</span><span class="btn-arrow" aria-hidden="true">&rarr;</span></button>
+            <p class="cta-microcopy"><!-- PLACEHOLDER -->Limited spots. Registration closes when the room fills.</p>
+            <div class="social-proof">
+              <span class="avatars" data-avatars aria-hidden="true"></span>
+              <span class="stars" data-stars aria-hidden="true"></span>
+              <span class="proof-label">Trusted by <strong data-cfg="socialProofCount">50+</strong> <span data-cfg="socialProofLabel">operators</span></span>
+            </div>
+          </div>
+          <div class="media-frame"><img src="assets/img/results/result-07.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Text message from a student on their last 800 units and moving 80 units a day." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-08.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Student Wins post showing 343.3K USD over the last 30 days and 376 units ordered." /></div>
+
+        </div>
+
+        <p class="ink-soft results-disclaimer">
+          We don't believe in get-rich-quick programs, only in hard work, adding value, and serving
+          others. There are no guarantees about results or earnings. All numbers shown are
+          illustrative.
+        </p>
+        <!-- PLACEHOLDER END -->
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- CTA CLUSTER                                                         -->
+    <!-- =================================================================== -->
+    <section>
+      <div class="container">
+        <div class="cta-cluster reveal">
+          <button class="btn btn--fx" type="button" data-open-register><span class="btn-label"><!-- PLACEHOLDER -->Save my seat</span><span class="btn-arrow" aria-hidden="true">&rarr;</span></button>
+          <p class="cta-microcopy"><!-- PLACEHOLDER -->Limited spots. Registration closes when the room fills.</p>
+          <div class="social-proof">
+            <span class="avatars" data-avatars aria-hidden="true"></span>
+            <span class="stars" data-stars aria-hidden="true"></span>
+            <span class="proof-label">Trusted by <strong data-cfg="socialProofCount">50+</strong> <span data-cfg="socialProofLabel">operators</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- CONSEQUENCE SPLIT                                                   -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="split-title">
+      <div class="container">
+        <!-- Removed from view by request. Kept as an sr-only heading rather than
+             deleted outright: the section is aria-labelledby="split-title", so
+             deleting it would leave that pointing at nothing and strip the
+             section's accessible name. Same pattern as ty-video-title. -->
+        <h2 id="split-title" class="sr-only">Two ways this goes</h2>
+        <div class="split">
+
+          <!-- PLACEHOLDER START: consequence split -->
+          <div class="card split-neg reveal">
+            <h3>If you keep guessing on your own</h3>
+            <ul class="check-list x-list" style="margin-top:var(--sp-2)">
+              <li class="check-item"><span class="check-badge x-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span><span class="line">You keep watching videos and researching but never actually build anything.</span></li>
+              <li class="check-item"><span class="check-badge x-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span><span class="line">You jump to a new model every time one gets hard.</span></li>
+              <li class="check-item"><span class="check-badge x-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span><span class="line">You put capital into a product the numbers never backed.</span></li>
+              <li class="check-item"><span class="check-badge x-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span><span class="line">Your income stays tied to someone else's decisions and competence.</span></li>
+            </ul>
+          </div>
+
+          <div class="card reveal">
+            <h3>If you attend the training</h3>
+            <ul class="check-list" style="margin-top:var(--sp-2)">
+              <li class="check-item"><span class="check-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="line">You understand the operator approach to building a brand effectively and what it involves.</span></li>
+              <li class="check-item"><span class="check-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="line">You leave with a real framework for building a brand you own, not scattered tips.</span></li>
+              <li class="check-item"><span class="check-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="line">You know what a product worth launching looks like.</span></li>
+              <li class="check-item"><span class="check-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="line">You sidestep the expensive mistakes most beginners make early.</span></li>
+            </ul>
+          </div>
+          <!-- PLACEHOLDER END -->
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- CTA CLUSTER                                                         -->
+    <!-- Closes the consequence split before the final CTA. -->
+    <!-- =================================================================== -->
+    <section>
+      <div class="container">
+        <div class="cta-cluster reveal">
+          <button class="btn btn--fx" type="button" data-open-register><span class="btn-label">YES! SAVE MY SPOT NOW!</span><span class="btn-arrow" aria-hidden="true">&rarr;</span></button>
+          <p class="cta-microcopy"><!-- PLACEHOLDER -->Limited spots. Registration closes when the room fills.</p>
+          <div class="social-proof">
+            <span class="avatars" data-avatars aria-hidden="true"></span>
+            <span class="stars" data-stars aria-hidden="true"></span>
+            <span class="proof-label">Trusted by <strong data-cfg="socialProofCount">50+</strong> <span data-cfg="socialProofLabel">operators</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- FINAL CTA                                                           -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="final-title">
+      <div class="container">
+        <div class="card card--accent final-cta reveal">
+          <div class="countdown-label" style="color:rgba(27,18,6,0.68)" aria-hidden="true">Event starts in</div>
+          <!-- PLACEHOLDER START: final CTA -->
+          <h2 id="final-title">Join us live on <span data-cfg="webinarDateLabel">September 17, 2026</span></h2>
+          <p style="color:rgba(27,18,6,0.82); max-width:var(--measure); margin-inline:auto">
+            Bring a notepad and your questions. The training is free and the seats are limited.
+          </p>
+          <!-- PLACEHOLDER END -->
+
+          <div class="countdown" data-countdown></div>
+          <span class="sr-only">The training begins on <span data-cfg="webinarDateLabel">September 17, 2026</span> at <span data-cfg="webinarTimeLabel">8:00 PM</span> <span data-cfg="timezoneLabel">ET / 5:00 PM PT</span>.</span>
+
+          <button class="btn btn--on-accent btn--fx" type="button" data-open-register><span class="btn-label"><!-- PLACEHOLDER -->Save my seat</span><span class="btn-arrow" aria-hidden="true">&rarr;</span></button>
+          <p class="cta-microcopy" style="color:rgba(27,18,6,0.66)"><!-- PLACEHOLDER -->Limited spots. Registration closes when the room fills.</p>
+          <div class="social-proof">
+            <span class="stars" data-stars aria-hidden="true"></span>
+            <span class="proof-label" style="color:rgba(27,18,6,0.82)">Trusted by <strong style="color:#1B1206" data-cfg="socialProofCount">50+</strong> <span data-cfg="socialProofLabel">operators</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- FOOTER                                                                -->
+  <!-- ===================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <!-- PLACEHOLDER START: footer disclaimers -->
+      <p class="disclaimer">
+        This site is not part of, or endorsed by, Facebook, Instagram, or Meta Platforms, Inc.
+        FACEBOOK and INSTAGRAM are trademarks of Meta Platforms, Inc.
+      </p>
+      <p class="disclaimer">
+        Earnings and results disclaimer: this training is educational. We do not guarantee any income
+        or specific outcome. Any figures or student results mentioned are illustrative and are not
+        typical. Building an Amazon business takes work, time, and capital, and involves risk,
+        including the risk of loss. Your results depend on your own effort, decisions, and market
+        conditions.
+      </p>
+      <!-- PLACEHOLDER END -->
+      <p>
+        <small>&copy; <span data-cfg="year">2026</span> Eman LA / The Brand Operator. All rights reserved.</small>
+      </p>
+      <div class="footer-links">
+        <a href="#" data-cfg-href="privacyUrl"><!-- PLACEHOLDER -->Privacy Policy</a>
+        <a href="#" data-cfg-href="termsUrl"><!-- PLACEHOLDER -->Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- REGISTRATION MODAL                                                    -->
+  <!-- ===================================================================== -->
+  <!-- aria-label, not aria-labelledby: the visible "Save your seat" heading and
+       its subhead were removed, so the dialog would otherwise have no
+       accessible name at all and screen readers would announce it as just
+       "dialog". This carries the name the heading used to provide. -->
+  <dialog class="modal" id="register-modal" aria-label="Save your seat">
+    <div class="modal-inner">
+      <button class="modal-close" type="button" aria-label="Close registration form">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+
+      <form novalidate>
+        <!-- Two columns. Names are short enough to share a row even at 375px,
+             and it buys ~90px of height, which is what lets the whole form sit
+             on one phone screen without scrolling inside the dialog. -->
+        <div class="field-row">
+          <div class="field">
+            <label for="reg-firstname">First name</label>
+            <input id="reg-firstname" name="firstname" type="text" autocomplete="given-name" required aria-describedby="reg-firstname-error" />
+            <span class="error-msg" id="reg-firstname-error" role="alert">Please enter your first name.</span>
+          </div>
+          <div class="field">
+            <label for="reg-lastname">Last name</label>
+            <input id="reg-lastname" name="lastname" type="text" autocomplete="family-name" required aria-describedby="reg-lastname-error" />
+            <span class="error-msg" id="reg-lastname-error" role="alert">Please enter your last name.</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="reg-email">Email</label>
+          <input id="reg-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="reg-email-error" />
+          <span class="error-msg" id="reg-email-error" role="alert">Please enter a valid email address.</span>
+        </div>
+        <div class="field">
+          <label for="reg-phone">Phone</label>
+          <!-- Country code and number are two controls that read as one. The
+               picker lists every country and is built at runtime from
+               assets/js/countries.js; edit that file to change the list.
+               Validation follows the selection: +1 is checked as a real NANP
+               number (exactly 10 digits, area code and exchange not starting 0
+               or 1), everything else only against the E.164 length bound, since
+               inventing strict per-country rules blocks real registrations.
+               The split also lets the browser autofill each part correctly
+               (tel-country-code / tel-national). -->
+          <div class="tel-group">
+            <div class="select-wrap tel-cc">
+              <select id="reg-phone-cc" name="phone_country_code" aria-label="Country code" autocomplete="tel-country-code">
+                <!-- Replaced at runtime by initPhoneCountry() from assets/js/countries.js.
+                     This single option is the fallback if that file fails to load. -->
+                <option value="+1" title="United States" selected>🇺🇸 +1</option>
+              </select>
+            </div>
+            <input id="reg-phone" name="phone" type="tel" autocomplete="tel-national" inputmode="numeric" maxlength="10" required aria-describedby="reg-phone-hint reg-phone-error" />
+          </div>
+          <!-- Which country was picked. Dial codes are not unique (+1 is the US,
+               Canada and ~22 more), so the ISO code is what the dashboard needs. -->
+          <input type="hidden" name="phone_country_iso" value="US" />
+          <span class="hint" id="reg-phone-hint">For text reminders only. We will not share your number.</span>
+          <span class="error-msg" id="reg-phone-error" role="alert">Please enter a valid phone number for the country you picked.</span>
+        </div>
+
+
+        <!-- ATTRIBUTION (hidden, never shown to the visitor).
+             Populated by initAttribution() in assets/js/main.js:
+               - utm_*, campaign_id/name, adset_id/name, ad_id/name,
+                 placement, site_source_name                   <- URL query string,
+                 captured on the first page of the visit and kept for the session.
+                 Tag your bio and story links (utm_source=instagram&amp;utm_content=reel-0812)
+                 and the dashboard can tell you which post produced the lead.
+               - client_ip_address                             <- LEFT EMPTY ON PURPOSE.
+                 A browser cannot read its own public IP. Your endpoint/webhook must
+                 fill this from the inbound request. See README.md.
+             The Meta fields present on fboptin.html (_fbp, _fbc, fbclid and the
+             three meta_*_event_id values) are deliberately absent: there is no
+             Pixel on this page to dedupe against and no ad click to attribute.
+             Do not add PII here; these are campaign identifiers only. -->
+        <input type="hidden" name="utm_source" data-attr="utm_source" />
+        <input type="hidden" name="utm_medium" data-attr="utm_medium" />
+        <input type="hidden" name="utm_campaign" data-attr="utm_campaign" />
+        <input type="hidden" name="utm_content" data-attr="utm_content" />
+        <input type="hidden" name="utm_term" data-attr="utm_term" />
+        <input type="hidden" name="campaign_id" data-attr="campaign_id" />
+        <input type="hidden" name="campaign_name" data-attr="campaign_name" />
+        <input type="hidden" name="adset_id" data-attr="adset_id" />
+        <input type="hidden" name="adset_name" data-attr="adset_name" />
+        <input type="hidden" name="ad_id" data-attr="ad_id" />
+        <input type="hidden" name="ad_name" data-attr="ad_name" />
+        <input type="hidden" name="placement" data-attr="placement" />
+        <input type="hidden" name="site_source_name" data-attr="site_source_name" />
+        <input type="hidden" name="client_ip_address" data-attr="client_ip_address" />
+
+        <!-- Which webinar this lead signed up for, e.g. "August 13th Webinar".
+             Derived in main.js from webinarISO and written here by
+             data-cfg-value, so it re-tags itself when the webinar date moves.
+             Sent as webinar_date for GHL / ActiveCampaign tagging. -->
+        <input type="hidden" name="webinar_date" data-cfg-value="webinarTag" />
+        <!-- Same date, phrased as the action, e.g. "August 13th webinar opt in".
+             Kept as its own field so the CRM can carry a "what they did" tag
+             separately from a "which webinar" tag. -->
+        <input type="hidden" name="webinar_optin_tag" data-cfg-value="webinarOptinTag" />
+
+        <!-- Qualifying question. Two radios styled as a segmented control: one
+             tap, both options visible, no native picker. A checkbox was avoided
+             because unchecked cannot be told apart from unanswered, and a select
+             costs an extra tap on mobile. REQUIRED as of 2026-08-09.
+
+             Asked here too, even though data-confirm-page above means the answer
+             does NOT choose a destination on this page: organic has one
+             confirmation page and no Pixel to optimise. It is collected so the
+             dashboard holds the same qualifying field for organic and paid
+             leads. -->
+        <fieldset class="field choice-field" aria-describedby="reg-capital-error">
+          <legend>To help us tailor this training better to your situation, do you have at least $10,000 USD in accessible capital set aside to deploy into launching your first product?</legend>
+          <div class="choice-row">
+            <label class="choice">
+              <input type="radio" name="capital_10k" value="yes" required />
+              <span>Yes</span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="capital_10k" value="no" required />
+              <span>No</span>
+            </label>
+          </div>
+          <span class="error-msg" id="reg-capital-error" role="alert">Please choose Yes or No.</span>
+        </fieldset>
+
+        <!-- Bot trap. Positioned off-screen rather than display:none, because
+             bots skip hidden inputs but happily fill visible-to-the-DOM ones.
+             A real visitor can never reach it (tabindex -1, aria-hidden), so any
+             value means automation and the relay silently drops the submission.
+             Do not add a visible label, do not change the name. -->
+        <div class="hp" aria-hidden="true">
+          <label for="reg-website">Website</label>
+          <input id="reg-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <!-- Pinned to the bottom of the dialog while it scrolls, so an open
+             keyboard can never bury the button. See .modal-actions in the CSS. -->
+        <div class="modal-actions">
+          <button class="btn btn--block btn--fx" type="submit">
+            <span class="btn-label"><!-- PLACEHOLDER -->Save my seat</span>
+            <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+          </button>
+          <p class="form-foot"><!-- PLACEHOLDER -->No spam. You can unsubscribe at any time.</p>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+
+  <!-- =================================================================== -->
+  <!-- STICKY MOBILE CTA                                                   -->
+  <!-- Phones only, and only once the hero's own button has scrolled away; -->
+  <!-- initStickyCta() in main.js owns that toggle. aria-hidden starts     -->
+  <!-- true and JS flips it, so a screen reader is not offered a button it  -->
+  <!-- cannot see. It opens the same dialog every other CTA does.          -->
+  <!-- =================================================================== -->
+  <div class="sticky-cta" data-sticky-cta aria-hidden="true">
+    <button class="btn btn--block btn--fx" type="button" data-open-register>
+      <span class="btn-label"><!-- PLACEHOLDER: CTA -->Save my seat</span>
+      <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+    </button>
+  </div>
+
+  <script src="assets/js/countries.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

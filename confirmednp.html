@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '[PLACEHOLDER_META_PIXEL_ID]');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=[PLACEHOLDER_META_PIXEL_ID]&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  <title>Your spot is confirmed &middot; The Brand Operator</title>
+  <meta name="robots" content="noindex" />
+
+  <!-- Placed before the stylesheet on purpose: it hides the page until
+       Humblytics calls window._hmblReveal(), so it must run before first paint.
+       The 2000ms setTimeout is the failsafe that reveals the page if the script
+       never loads (ad blocker, outage). See README section 8. -->
+  <!-- Start Humblytics Tracking Code -->
+  <script>
+    (function(){
+      document.documentElement.style.opacity='0';
+      window._hmblReveal=function(){ document.documentElement.style.opacity='1'; };
+      setTimeout(window._hmblReveal, 2000);
+    })();
+  </script>
+  <script async src="https://app.humblytics.com/hmbl.min.js?id=[PLACEHOLDER_HUMBLYTICS_ID]"></script>
+  <!-- End Humblytics Tracking Code -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <!-- Wistia player runtime. Loaded ONCE for the whole page; the individual
+       videos each pull their own media module next to their markup below. -->
+  <script src="https://fast.wistia.com/player.js" async></script>
+</head>
+<body>
+
+  <!-- Page-level confetti burst. JS fills this on load; empty and invisible
+       with JS off or under reduced motion, so it can never block the page. -->
+  <div class="celebrate-layer" data-celebrate aria-hidden="true"></div>
+
+  <!-- Attention banner. Sticky so it stays visible while they scroll. -->
+  <div class="topbar-alert" role="status">
+    <div class="container">
+      LAST STEP TO CONFIRM YOUR SPOT, DO NOT EXIT
+    </div>
+  </div>
+
+  <main>
+
+    <!-- =================================================================== -->
+    <!-- PROGRESS BAR — 97%, no labels.                                      -->
+    <!-- Short, thick, and unlabelled on purpose: the bar itself carries the  -->
+    <!-- meaning, and the old "97% complete / Almost there" text was clutter. -->
+    <!-- initProgressFill() paints it at 0 then transitions it up to 97%.     -->
+    <!-- With JS off the inline width already sits at 97%, so the bar is      -->
+    <!-- never rendered empty; the animation is skipped under reduced motion. -->
+    <!-- =================================================================== -->
+    <div class="progress-band progress-band--bare">
+      <div class="container">
+        <div class="progress-pct-row">
+          <span class="progress-pct" data-progress-pct>97%</span>
+        </div>
+        <div class="progress-track progress-track--thick"
+             role="progressbar"
+             aria-valuenow="97" aria-valuemin="0" aria-valuemax="100"
+             aria-label="Registration progress"
+             data-progress-fill-to="97">
+          <div class="progress-fill" style="width:97%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- HERO                                                                -->
+    <!-- =================================================================== -->
+    <section class="hero hero--top" aria-labelledby="confirmed-title">
+      <div class="container" style="text-align:center">
+        <!-- Client-supplied final copy. The pill was removed to cut clutter. -->
+        <h1 id="confirmed-title">Your Registration is ALMOST Confirmed...</h1>
+        <p class="subhead">
+          Watch the short video and follow the steps below to complete your registration
+        </p>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- THANK-YOU VIDEO + CONTACT NOTICE                                    -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="ty-video-title" style="padding-top:0">
+      <div class="container">
+        <h2 id="ty-video-title" class="sr-only">Watch this before your live training</h2>
+
+        <!-- Main confirmation video. player.js is already loaded in <head>;
+             this pulls only its own media module.
+
+             Autoplays WITH sound, by request. Chrome and Safari refuse sound-on
+             autoplay unless the visitor has a strong history with the domain, and
+             a refused autoplay leaves the video sitting paused, so initAutoplayVideo()
+             in main.js catches that case: it starts the video muted instead, then
+             unmutes on the visitor's first tap or click. Sound where the browser
+             allows it, playback everywhere, never a dead player. The data attribute
+             is that code's hook.
+
+             The blurred-swatch placeholder for this media-id lives in
+             styles.css next to the testimonial ones. -->
+        <div class="video-embed reveal" data-autoplay-video="qtzd60x0s7">
+          <script src="https://fast.wistia.com/embed/qtzd60x0s7.js" async type="module"></script>
+          <wistia-player media-id="qtzd60x0s7" aspect="1.7777777777777777"
+                         autoplay playsinline></wistia-player>
+        </div>
+
+        <!-- Replaces the countdown that used to sit here. -->
+        <div class="contact-notice contact-notice--center reveal">
+          <div class="contact-notice__body">
+            <p class="contact-notice__copy">You'll receive a text and/or call from us within the
+            next few minutes</p>
+            <p class="contact-notice__timer">If it's from a number you don't recognize, it's
+            probably us. Make sure to check your notifications for missed calls and/or texts</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- NEXT STEPS: the segmentation survey                                 -->
+    <!--                                                                      -->
+    <!-- brand-operator-survey.html in an iframe rather than a Typeform. It   -->
+    <!-- is same-origin, so it needs no third-party embed script and nothing  -->
+    <!-- here can be blocked by an ad blocker.                                -->
+    <!--                                                                      -->
+    <!-- NOT prefilled on purpose. The survey accepts                          -->
+    <!-- ?first_name=&last_name=&email= and would skip its first step, but     -->
+    <!-- putting an email in the src would write PII into the DOM of a page    -->
+    <!-- anyone can view-source, and this funnel's rule is that PII never goes -->
+    <!-- in a URL (see main.js). Registration only stores the first name, so   -->
+    <!-- there is no complete set to pass anyway; the visitor confirms the     -->
+    <!-- three fields inside the iframe instead.                               -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="next-steps-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 id="next-steps-title"><span class="hl">BEFORE YOU GO ANY FURTHER</span></h2>
+        </div>
+
+        <div class="card reveal">
+          <h3 class="prep-title" style="margin-bottom:var(--sp-1)">
+            Tell Eman Where You&rsquo;re At
+          </h3>
+          <p class="ink-soft" style="text-align:center; margin-bottom:var(--sp-3)">
+            1 minute. It shapes what gets covered live this week.
+          </p>
+
+          <!-- loading="lazy" keeps it off the critical path; the survey is
+               below the fold on every viewport. title is what a screen reader
+               announces in place of the frame's contents. -->
+          <div class="survey-embed">
+            <iframe src="brand-operator-survey.html"
+                    title="Tell Eman where you are: a one minute survey"
+                    loading="lazy" frameborder="0"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TWO STEPS + EVENT DETAILS                                           -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="steps-title">
+      <div class="container">
+        <!-- PLACEHOLDER: NEEDS YOUR COPY — heading for the steps -->
+        <h2 id="steps-title" class="prep-title reveal">Your Next Steps</h2>
+
+        <!-- PLACEHOLDER START: NEEDS YOUR COPY — the two steps.
+
+             Each step is its own card. They used to share one card with the
+             heading and the event details, which made three separate actions
+             read as a single wall of text with two hairlines in it. Separate
+             cards give each step its own edge, so "how far through am I" is
+             answerable at a glance. -->
+        <ol class="prep-steps prep-steps--cards">
+
+            <li class="prep-step card reveal">
+              <span class="prep-icon" aria-hidden="true">1</span>
+              <div class="prep-copy">
+                <h3>Join our WhatsApp group below</h3>
+                <p>Click the button below to join our exclusive WhatsApp group to get access to
+                exclusive updates and resources. If you don't have it, make sure to download it.</p>
+                <div class="cal-buttons">
+                  <!-- data-whatsapp-link, NOT data-cfg-href: initThankYouLinks()
+                       skips any value that is not an http URL, so while
+                       whatsappGroupUrl holds its placeholder this button stays
+                       inert rather than pointing at the placeholder string. It
+                       also sets target/rel once a real link lands. -->
+                  <a class="btn btn--fx" data-whatsapp-link href="#"><span class="btn-label">Join Group</span><span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
+                </div>
+                <p class="ink-soft">Click the button above to join. Don't have WhatsApp?
+                <a href="https://www.whatsapp.com/download" target="_blank" rel="noopener noreferrer">Download it</a>.
+                It will be essential to ensure you're prepared for this Masterclass.</p>
+              </div>
+            </li>
+
+            <li class="prep-step card reveal">
+              <span class="prep-icon" aria-hidden="true">2</span>
+              <div class="prep-copy">
+                <h3>Add event to your calendar</h3>
+                <p>Add the event to your calendar to ensure you can show up on time before the
+                seats are filled and avoid missing out.</p>
+                <div class="cal-buttons">
+                  <!-- Google only now. The Apple/.ics anchor was removed; initCalendar()
+                       guards on neither hook being present, so the Google link keeps
+                       working and the .ics builder simply finds nothing to bind. -->
+                  <a class="btn btn--fx" data-gcal href="#" rel="noopener"><span class="btn-label">Add to Google Calendar</span><span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
+                </div>
+                <p class="ink-soft">Click the button above to add the event to your Google
+                Calendar.</p>
+              </div>
+            </li>
+
+            <li class="prep-step card reveal">
+              <span class="prep-icon" aria-hidden="true">3</span>
+              <div class="prep-copy">
+                <h3>IMPORTANT: Check Your Inbox</h3>
+                <p>Look out for the email titled "[Action Needed] Confirm your seat &amp; claim
+                your ticket for the masterclass" and open it to claim your ticket. If it is not in
+                your inbox, check promotions and spam.</p>
+
+                <!-- Real links, not decoration. Each opens that provider's web
+                     inbox in a new tab. Apple Mail has no web URL scheme a
+                     browser can open, so the Apple link goes to iCloud Mail,
+                     which is the web equivalent. -->
+                <div class="mail-apps">
+                  <a class="mail-app" href="https://mail.google.com/mail/u/0/#search/label%3Ainbox"
+                     target="_blank" rel="noopener noreferrer" aria-label="Open Gmail in a new tab">
+                    <svg viewBox="0 0 48 48" aria-hidden="true">
+                      <path fill="#fff" d="M6 13h36v22H6z"/>
+                      <path fill="#e94235" d="M6 13.6c0-1.6 1.8-2.5 3.1-1.6L24 23.1V35H8.4A2.4 2.4 0 0 1 6 32.6z"/>
+                      <path fill="#34a853" d="M42 13.6c0-1.6-1.8-2.5-3.1-1.6L24 23.1V35h15.6a2.4 2.4 0 0 0 2.4-2.4z"/>
+                      <path fill="#fbbc04" d="M6 13.6 24 27.1l18-13.5v6.2L24 33.3 6 19.8z"/>
+                    </svg>
+                    <span class="mail-app__name">Gmail</span>
+                  </a>
+
+                  <a class="mail-app" href="https://outlook.live.com/mail/0/"
+                     target="_blank" rel="noopener noreferrer" aria-label="Open Outlook in a new tab">
+                    <svg viewBox="0 0 48 48" aria-hidden="true">
+                      <path fill="#1a56c4" d="M26 11h16.2a1.8 1.8 0 0 1 1.8 1.8v22.4a1.8 1.8 0 0 1-1.8 1.8H26z"/>
+                      <path fill="#3d7ff0" d="M26 11h16.2a1.8 1.8 0 0 1 1.8 1.8v3.4L26 25.6z"/>
+                      <path fill="#0b3a92" d="M4 9.4 25 6v36L4 38.6z"/>
+                      <ellipse cx="14.4" cy="24" rx="6.2" ry="7.4" fill="#fff"/>
+                      <ellipse cx="14.4" cy="24" rx="3" ry="4.3" fill="#0b3a92"/>
+                    </svg>
+                    <span class="mail-app__name">Outlook</span>
+                  </a>
+
+                  <a class="mail-app" href="https://www.icloud.com/mail/"
+                     target="_blank" rel="noopener noreferrer" aria-label="Open iCloud Mail in a new tab">
+                    <svg viewBox="0 0 48 48" aria-hidden="true">
+                      <rect x="5" y="12" width="38" height="24" rx="5" fill="#2f95f6"/>
+                      <path d="M8.5 16.5 24 27l15.5-10.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="mail-app__name">Apple Mail</span>
+                  </a>
+                </div>
+                <p class="ink-soft">Click one of the buttons above to open your inbox (you must
+                check it to confirm your seat and receive your ticket).</p>
+              </div>
+            </li>
+
+          </ol>
+          <!-- PLACEHOLDER END -->
+
+        <!-- Event details get their own card under the steps, so the section
+             reads as: the three things to do, then when the thing is. -->
+        <div class="event-strip event-strip--card card reveal">
+          <div class="ty-details">
+              <div class="ty-detail-row">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>
+                <span><strong data-cfg="webinarDayLabel">THURSDAY</strong>, <strong data-cfg="webinarDateLabel">September 17, 2026</strong></span>
+              </div>
+              <div class="ty-detail-row">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                <span><strong data-cfg="webinarTimeLabel">8:00 PM</strong> <span data-cfg="timezoneLabel">ET / 5:00 PM PT</span></span>
+              </div>
+              <div class="ty-detail-row">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.3-7-11a7 7 0 1 1 14 0c0 4.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                <span data-cfg="eventLocation">Online</span>
+              </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- BREAKOUT VIDEOS (replaces the written FAQ)                          -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="breakout-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <!-- PLACEHOLDER: NEEDS YOUR COPY -->
+          <h2 id="breakout-title">A Few of Your Questions and Concerns Answered</h2>
+          <p class="ink-soft">Make sure to thoroughly take a look through all the videos below in
+          order to get the clarity you&rsquo;re looking for before the event</p>
+        </div>
+
+        <!-- 8 breakout videos, one per row so each plays large. These use
+             Wistia's iframe embed rather than the <wistia-player> component the
+             main video uses: an iframe is self-contained, so eight of them cost
+             no extra module scripts, and .video-embed already sizes an iframe.
+             Add class .video-stack--2up on the container for two side by side.
+
+             None of these autoplay, on purpose. Eight players competing for
+             audio on one page is not a thing anyone wants. They carry no visible
+             heading by request; each iframe title is what screen readers announce. -->
+        <div class="video-stack reveal">
+
+          <div class="video-embed">
+            <iframe src="https://fast.wistia.net/embed/iframe/joc4yrf0da?seo=true&amp;videoFoam=true"
+                    title="Am I reselling name brands or doing arbitrage/dropshipping?"
+                    allow="autoplay; fullscreen" allowfullscreen
+                    frameborder="0" scrolling="no"></iframe>
+          </div>
+
+          <!-- PLACEHOLDER: NEEDS YOUR COPY — the question this one answers.
+               These players carry no visible heading, so the iframe title is the
+               only thing a screen reader announces, and "Breakout video 2" tells
+               a non-sighted visitor nothing. Wistia calls it "Breakout Video 4
+               (1)", which is the name it gets from being duplicated, so it does
+               not identify the topic either. -->
+          <div class="video-embed">
+            <iframe src="https://fast.wistia.net/embed/iframe/9din2qrlss?seo=true&amp;videoFoam=true"
+                    title="Breakout video 2"
+                    allow="autoplay; fullscreen" allowfullscreen
+                    frameborder="0" scrolling="no"></iframe>
+          </div>
+
+          <!-- Slots 2 and 3. Wistia calls these "Breakout Video 6" and "Breakout
+               Video 8" from the June set, so the names do NOT indicate position;
+               the running order below is what governs. Titles here are the only
+               label a screen reader gets, so if the two are the wrong way round
+               the fix is to swap the two src values, not the titles. -->
+
+          <div class="video-embed">
+            <iframe src="https://fast.wistia.net/embed/iframe/sdmsjc0zja?seo=true&amp;videoFoam=true"
+                    title="Can I fit this around my family, busy schedule, and current commitments?"
+                    allow="autoplay; fullscreen" allowfullscreen
+                    frameborder="0" scrolling="no"></iframe>
+          </div>
+
+          <div class="video-embed">
+            <iframe src="https://fast.wistia.net/embed/iframe/xl9qabq395?seo=true&amp;videoFoam=true"
+                    title="What are realistic results and what does the long term look like?"
+                    allow="autoplay; fullscreen" allowfullscreen
+                    frameborder="0" scrolling="no"></iframe>
+          </div>
+
+          <div class="video-embed">
+            <iframe src="https://fast.wistia.net/embed/iframe/4olf90wcs8?seo=true&amp;videoFoam=true"
+                    title="Can a total beginner survive against experienced sellers and big brands?"
+                    allow="autoplay; fullscreen" allowfullscreen
+                    frameborder="0" scrolling="no"></iframe>
+          </div>
+
+          <div class="video-embed">
+            <iframe src="https://fast.wistia.net/embed/iframe/nl3oc5uqbe?seo=true&amp;videoFoam=true"
+                    title="How much capital does it take to get started?"
+                    allow="autoplay; fullscreen" allowfullscreen
+                    frameborder="0" scrolling="no"></iframe>
+          </div>
+
+          <div class="video-embed">
+            <iframe src="https://fast.wistia.net/embed/iframe/hrsjeqoucv?seo=true&amp;videoFoam=true"
+                    title="How long is the live training?"
+                    allow="autoplay; fullscreen" allowfullscreen
+                    frameborder="0" scrolling="no"></iframe>
+          </div>
+
+          <div class="video-embed">
+            <iframe src="https://fast.wistia.net/embed/iframe/0wx48zqhb7?seo=true&amp;videoFoam=true"
+                    title="What if I can't attend live?"
+                    allow="autoplay; fullscreen" allowfullscreen
+                    frameborder="0" scrolling="no"></iframe>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- PROOF: short form two-up, then the long-form case study             -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="results-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <!-- Client-supplied final copy. -->
+          <h2 id="results-title">Results From Members Inside The Brand Operator Who Were Exactly Where You Are</h2>
+          <p class="ink-soft">Take a look at what members inside the community who are no different than you were able to achieve through a support system and the right blueprint</p>
+        </div>
+
+        <!-- Long-form case study leads the section, short-form proof follows. -->
+<div class="case-study card reveal">
+          <div class="case-study__video">
+            <div class="video-embed">
+              <iframe src="https://www.youtube.com/embed/h1sWu42xnZA?si=S-hJmq1dXFmixQr4"
+                      title="Timmy: from zero to 1,000 dollar days" loading="lazy"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerpolicy="strict-origin-when-cross-origin"
+                      allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="case-study__body">
+            <span class="vt-headline">Timmy 0 - $1000 days</span>
+            <p class="case-study__context">A first-time seller who expected to lose money on his
+            test order.</p>
+            <p class="case-study__label">After joining Brand Operator</p>
+            <ul class="check-list">
+              <li class="check-item"><span class="check-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="line">Hit $1,000 a day within his first week</span></li>
+              <li class="check-item"><span class="check-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="line">Over $6,000 and 100-plus units in his first seven days of launch</span></li>
+              <li class="check-item"><span class="check-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="line">Profitable on the test order he expected to lose money on</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- short form: videos and screenshots, two per row -->
+        <div class="proof-grid reveal">
+
+          <figure class="vt-item vt-item--stacked">
+            <div class="vt-frame">
+              <script src="https://fast.wistia.com/embed/r185w1sed0.js" async type="module"></script>
+              <wistia-player media-id="r185w1sed0" aspect="0.5625"></wistia-player>
+            </div>
+            <figcaption>
+              <span class="vt-headline">Allan - from 2000 to 20000 a month in revenue</span>
+              Stuck at $2,000 a month, he scaled past $20,000 a month, mostly by avoiding the manufacturing, listing, and PPC mistakes that quietly drain cash.
+            </figcaption>
+          </figure>
+
+          <figure class="vt-item vt-item--stacked">
+            <div class="vt-frame">
+              <script src="https://fast.wistia.com/embed/ejjhtlaboh.js" async type="module"></script>
+              <wistia-player media-id="ejjhtlaboh" aspect="0.5625"></wistia-player>
+            </div>
+            <figcaption>
+              <span class="vt-headline">From almost unprofitable to 35% margins</span>
+              A beginner who was unprofitable and unsure, until he could get direct feedback in the community. Six to eight months later he's at a 35% net margin and launching new products.
+            </figcaption>
+          </figure>
+
+          <div class="media-frame"><img src="assets/img/results/result-01.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Amazon Seller app dashboard showing 443.3K USD in product sales over the last 30 days." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-02.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Amazon Seller app dashboard showing 500.2K USD in product sales this month, up 33 percent." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-03.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Student Wins post showing 290.7K USD in product sales over twelve months, up 176 percent." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-04.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Student message reading 'Finished the month strong, 12k in rev', with a dashboard showing 12.01K USD over 30 days." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-05.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Student Wins post captioned 'This brand came back from the dead', showing 5,749 USD this month, up 951 percent." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-06.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Amazon Seller dashboard showing 314.3K USD over twelve months, up 184 percent." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-07.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Text message from a student on their last 800 units and moving 80 units a day." /></div>
+          <div class="media-frame"><img src="assets/img/results/result-08.jpg" width="800" height="1739" loading="lazy" decoding="async" alt="Student Wins post showing 343.3K USD over the last 30 days and 376 units ordered." /></div>
+
+        </div>
+
+        <p class="ink-soft results-disclaimer">
+          We don't believe in get-rich-quick programs, only in hard work, adding value, and serving
+          others. There are no guarantees about results or earnings. All numbers shown are
+          illustrative.
+        </p>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- LONG-FORM CASE STUDY                                                -->
+
+
+    <!-- =================================================================== -->
+    <!-- CLOSING                                                             -->
+    <!-- =================================================================== -->
+    <section aria-labelledby="closing-title">
+      <div class="container" style="text-align:center">
+        <!-- No card: this sits straight on the page background as the closing
+             note. The button scrolls back up to the two steps, it does not
+             leave the page. -->
+        <h2 id="closing-title">One thing before you go</h2>
+        <p class="ink-soft" style="max-width:var(--measure); margin-inline:auto">
+          Make sure you check your email inbox for your ticket and add the event to your calendar
+          if you have not already to confirm your spot
+        </p>
+        <div class="cal-buttons" style="justify-content:center">
+          <a class="btn btn--fx" href="#steps-title">
+            <span class="btn-label">Take me back to the steps</span>
+            <span class="btn-arrow btn-arrow--up" aria-hidden="true">&uarr;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER (same disclaimers as the rest of the funnel) -->
+  <footer class="site-footer">
+    <div class="container">
+      <!-- PLACEHOLDER START: footer disclaimers -->
+      <p class="disclaimer">
+        This site is not part of, or endorsed by, Facebook, Instagram, or Meta Platforms, Inc.
+        FACEBOOK and INSTAGRAM are trademarks of Meta Platforms, Inc.
+      </p>
+      <p class="disclaimer">
+        Earnings and results disclaimer: this training is educational. We do not guarantee any income
+        or specific outcome. Any figures or student results mentioned are illustrative and are not
+        typical. Building an Amazon business takes work, time, and capital, and involves risk,
+        including the risk of loss. Your results depend on your own effort, decisions, and market
+        conditions.
+      </p>
+      <!-- PLACEHOLDER END -->
+      <p>
+        <small>&copy; <span data-cfg="year">2026</span> Eman LA / The Brand Operator. All rights reserved.</small>
+      </p>
+      <div class="footer-links">
+        <a href="#" data-cfg-href="privacyUrl"><!-- PLACEHOLDER -->Privacy Policy</a>
+        <a href="#" data-cfg-href="termsUrl"><!-- PLACEHOLDER -->Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Placeholder: how to attend video">
+  <rect width="800" height="600" fill="#7A2A08"/>
+  <rect width="800" height="600" fill="url(#gHow)"/>
+  <defs>
+    <linearGradient id="gHow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F97316" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#7A2A08" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="400" cy="270" r="64" fill="#FFFFFF" fill-opacity="0.92"/>
+  <path d="M384 240l52 30-52 30z" fill="#F97316"/>
+  <text x="400" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#FFFFFF">PLACEHOLDER</text>
+  <text x="400" y="428" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#FFFFFF" fill-opacity="0.85">How to attend</text>
+</svg>

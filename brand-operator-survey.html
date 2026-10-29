@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<!-- POST-REGISTRATION SURVEY (/brand-operator-survey).
+
+     A segmentation intake shown to registrants after they opt in. Deliberately
+     SELF-CONTAINED: all CSS and JS are inline and it loads neither
+     assets/css/styles.css nor assets/js/main.js, so it shares nothing with the
+     rest of the funnel and is NOT part of tools/sync-clones.py. Dark, on Inter,
+     where the funnel is light on Instrument Sans; that is intentional.
+
+     ONE request goes out on submit, to the Zapier catch hook. Zapier is what
+     forwards the Lead to Meta's Conversions API, via its Facebook Conversions
+     app, so the CAPI ACCESS TOKEN LIVES IN THE ZAP AND NEVER IN THIS FILE. That
+     matters: the token grants write access to the pixel, and anything in here is
+     readable in view-source. Same reason api/register.js holds DASHBOARD_URL and
+     ZAPIER_HOOK_URL as env vars rather than config.js holding them.
+
+     It does still read three things the funnel left behind in same-origin
+     storage - the Meta event id, and the _fbp/_fbc cookies - because without the
+     event id Meta counts this Lead AND the Pixel's Lead as two conversions. See
+     readFunnelAttribution() below. -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tell us about you &middot; The Brand Operator</title>
+  <meta name="robots" content="noindex" />
+
+  <!-- Meta Pixel Code
+
+       GUARDED ON window.self === window.top, unlike every other page in the
+       funnel. This page is also embedded in an iframe on the confirmation
+       pages, and an unguarded copy would fire a second PageView on every one of
+       those views: one from the parent, one from the frame. So the pixel runs
+       only when the survey is the top document, i.e. someone opened
+       /brand-operator-survey directly. Inside the frame the parent's pixel has
+       already counted the view.
+
+       Base code only. The Lead for this survey is raised server-side by the Zap
+       behind it, sharing meta_lead_event_id with the Pixel so Meta deduplicates;
+       firing a browser Lead here as well would double-count it. -->
+  <script>
+  if (window.self === window.top) {
+  /* Marks the page as being viewed on its own rather than inside the
+     confirmation-page iframe. Set here, in the head, so the standalone heading
+     is present at first paint instead of appearing a frame later. */
+  document.documentElement.className += " is-standalone";
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '[PLACEHOLDER_META_PIXEL_ID]');
+  fbq('track', 'PageView');
+  }
+  </script>
+  <!-- No <noscript> fallback, also unlike the other pages: it cannot be
+       conditioned on being top-frame, so it would reintroduce the double count
+       for JS-off visitors, and this page is entirely JS-driven, so a JS-off
+       visitor cannot complete it and is not a session worth counting. -->
+  <!-- End Meta Pixel Code -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:        #0D0D0D;
+      --ink:       #FFFFFF;
+      --ink-soft:  rgba(255,255,255,0.62);
+      --ink-faint: rgba(255,255,255,0.38);
+      --accent:    #FF6B00;
+      /* Selected-card tint. Low alpha so the orange reads as a wash over the
+         near-black rather than as a second colour. */
+      --accent-wash:   rgba(255,107,0,0.10);
+      --accent-wash-2: rgba(255,107,0,0.16);
+      --card:       #151515;
+      --card-hover: #1C1C1C;
+      --line:       rgba(255,255,255,0.12);
+      --radius:     14px;
+      --sp-1: 8px; --sp-2: 16px; --sp-3: 24px; --sp-4: 32px; --sp-5: 40px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      /* dvh, not vh: on mobile Safari/Chrome the toolbars are excluded from dvh
+         but not from vh, and vh here made the action bar sit just under the
+         fold — the exact thing this layout exists to prevent. */
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex; flex-direction: column;
+    }
+
+    /* ---------------------------------------------------------------------
+       PROGRESS BAR
+       Pinned so it stays visible while a long step scrolls. aria-valuenow is
+       updated in JS; the visual fill and the announced value come from the
+       same render() call so they can never disagree.
+       --------------------------------------------------------------------- */
+    .progress {
+      position: sticky; top: 0; z-index: 10;
+      background: var(--bg);
+      padding: var(--sp-3) var(--sp-3) var(--sp-2);
+      border-bottom: 1px solid var(--line);
+    }
+    .progress__track {
+      height: 4px; border-radius: 999px;
+      background: rgba(255,255,255,0.10);
+      overflow: hidden;
+    }
+    .progress__fill {
+      height: 100%; width: 0%;
+      background: var(--accent);
+      border-radius: 999px;
+      transition: width 260ms ease;
+    }
+    .progress__label {
+      margin-top: var(--sp-1);
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    /* Hidden by default: the common case is the iframe, where the parent page
+       supplies the heading. Only html.is-standalone reveals it. */
+    .masthead { display: none; margin-bottom: var(--sp-3); }
+    html.is-standalone .masthead { display: block; }
+    .masthead h1 {
+      margin: 0 0 var(--sp-1);
+      font-size: clamp(21px, 4.4vw, 27px); line-height: 1.22;
+      font-weight: 700; letter-spacing: -0.01em;
+    }
+    .masthead p { margin: 0; color: var(--ink-soft); font-size: 15px; }
+    @media (max-width: 560px) {
+      /* Costs about 60px of the one-screen budget, so it runs tight here.
+         Still fits 375x667 on the longest step; the sticky action bar
+         guarantees the button either way. */
+      .masthead { margin-bottom: var(--sp-2); }
+      .masthead h1 { font-size: 20px; }
+      .masthead p { font-size: 13px; }
+    }
+    @media (max-height: 640px) {
+      /* Short screens need the height more than they need the heading. */
+      html.is-standalone .masthead { display: none; }
+    }
+
+    .wrap {
+      max-width: 620px; width: 100%; margin: 0 auto;
+      padding: var(--sp-4) var(--sp-3) var(--sp-3);
+      /* min-height:0 at every level of the chain, or a flex child refuses to
+         shrink below its content and the overflow returns. */
+      flex: 1 1 auto; min-height: 0;
+      display: flex; flex-direction: column;
+    }
+    #survey { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+
+    /* ---------------------------------------------------------------------
+       STEPS. Only one is in the document flow at a time. `hidden` rather than
+       a class so assistive tech skips the inactive ones outright.
+       --------------------------------------------------------------------- */
+    .step[hidden] { display: none; }
+    .step {
+      animation: rise 240ms ease both;
+      flex: 1 1 auto; min-height: 0;
+      /* Only engages when a step genuinely cannot fit (small screen, large
+         text). Everything else stays on one screen. */
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    .step__q {
+      margin: 0 0 var(--sp-1);
+      font-size: clamp(19px, 3.8vw, 23px); line-height: 1.3;
+      font-weight: 600; letter-spacing: -0.01em;
+    }
+    .step__help { margin: 0 0 var(--sp-3); color: var(--ink-soft); font-size: 14px; }
+    .step__q + .options, .step__q + .fields { margin-top: var(--sp-3); }
+
+    /* fieldset carries the radio group so the legend names it for screen
+       readers; the visual question text IS the legend. */
+    fieldset { border: 0; margin: 0; padding: 0; }
+    legend { padding: 0; }
+
+    /* --- text inputs ---------------------------------------------------- */
+    .fields { display: grid; gap: var(--sp-2); }
+    .field label {
+      display: block; margin-bottom: 6px;
+      font-size: 13px; font-weight: 600; color: var(--ink-soft);
+    }
+    .field input, .field textarea {
+      width: 100%;
+      background: var(--card);
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 13px 14px;
+      /* 16px minimum or iOS Safari zooms the page on focus. */
+      font: inherit; font-size: 16px;
+      min-height: 48px;
+    }
+    .field textarea { min-height: 132px; resize: vertical; line-height: 1.5; }
+    .field input::placeholder, .field textarea::placeholder { color: var(--ink-faint); }
+    .field input:focus-visible, .field textarea:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent;
+    }
+    .field.has-error input, .field.has-error textarea { border-color: #FF4D4D; }
+
+    .hint { display: block; margin-top: 6px; font-size: 12.5px; color: var(--ink-faint); }
+
+    .error {
+      display: none;
+      margin-top: 6px; font-size: 13px; font-weight: 500; color: #FF8080;
+    }
+    .has-error .error { display: block; }
+
+    /* --- answer cards ---------------------------------------------------
+       The radio itself is visually hidden but still focusable and still the
+       thing being checked, so keyboard arrow-keys, the checked state and the
+       screen-reader announcement all come from the browser rather than from
+       JS pretending to be a radio group. Styling hangs off :checked.
+       --------------------------------------------------------------------- */
+    .options { display: grid; gap: 10px; }
+    .option { position: relative; display: block; }
+    .option input {
+      position: absolute; width: 1px; height: 1px;
+      margin: 0; padding: 0; border: 0;
+      opacity: 0; pointer-events: none;
+    }
+    .option__face {
+      display: flex; align-items: center; gap: 12px;
+      min-height: 48px;
+      padding: 13px 16px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 3px solid transparent;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 15px; line-height: 1.4;
+      transition: background 140ms ease, border-color 140ms ease;
+    }
+    .option__face:hover { background: var(--card-hover); }
+    .option input:checked + .option__face {
+      background: var(--accent-wash);
+      border-color: var(--accent-wash-2);
+      border-left-color: var(--accent);
+    }
+    /* Focus ring lives on the face, since the input it belongs to is invisible. */
+    .option input:focus-visible + .option__face { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    .option__dot {
+      flex: none;
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.30);
+      position: relative;
+    }
+    .option input:checked + .option__face .option__dot { border-color: var(--accent); }
+    .option input:checked + .option__face .option__dot::after {
+      content: ""; position: absolute; inset: 3px;
+      border-radius: 50%; background: var(--accent);
+    }
+
+    .choice-error { margin-top: 10px; }
+
+    /* --- actions --------------------------------------------------------- */
+    .actions {
+      flex: 0 0 auto;
+      position: sticky; bottom: 0;
+      margin-top: var(--sp-3);
+      padding-top: var(--sp-3);
+      /* Opaque, so an overscrolling step passes behind rather than through it. */
+      background: var(--bg);
+      border-top: 1px solid transparent;
+      display: flex; align-items: center; gap: var(--sp-2);
+    }
+    /* The hairline only appears once there is something scrolled behind it. */
+    .is-scrollable .actions { border-top-color: var(--line); }
+    .btn {
+      appearance: none; border: 0; cursor: pointer;
+      background: var(--accent); color: #150A00;
+      font: inherit; font-weight: 700; font-size: 16px;
+      padding: 14px 26px; min-height: 50px;
+      border-radius: 999px;
+      transition: filter 140ms ease, transform 140ms ease;
+    }
+    .btn:hover { filter: brightness(1.07); }
+    .btn:active { transform: translateY(1px); }
+    .btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+    .btn[disabled] { opacity: 0.6; cursor: default; transform: none; filter: none; }
+    .btn--back {
+      background: none; color: var(--ink-soft);
+      font-weight: 600; padding: 14px 6px; min-height: 50px;
+    }
+    .btn--back:hover { color: var(--ink); }
+
+    /* --- confirmation ---------------------------------------------------- */
+    .done { text-align: center; padding: var(--sp-5) 0; }
+    .done__mark {
+      width: 62px; height: 62px; margin: 0 auto var(--sp-3);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      background: var(--accent-wash); border: 1px solid var(--accent-wash-2);
+    }
+    .done__mark svg { width: 28px; height: 28px; stroke: var(--accent); }
+    .done h2 { margin: 0 0 var(--sp-1); font-size: clamp(22px, 5vw, 28px); font-weight: 700; letter-spacing: -0.01em; }
+    .done p  { margin: 0; color: var(--ink-soft); }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0;
+      margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
+
+    /* Project rule: reduced motion is respected in CSS as well as JS. */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+
+    /* ---------------------------------------------------------------------
+       MOBILE FIT
+
+       Target: question, every option and the button all on one screen at
+       375x667, so nobody scrolls to answer. The savings come from a tighter
+       rhythm and slightly denser cards; the page has no masthead to trim, so
+       the question is the first thing on the screen after the progress bar.
+       Tap targets stay at 48px and inputs stay at 16px,
+       both of which are floors: below 48px the cards get hard to hit, and below
+       16px iOS zooms the page on focus.
+       --------------------------------------------------------------------- */
+    @media (max-width: 560px) {
+      .progress { padding: 12px var(--sp-2) 10px; }
+      .wrap { padding: var(--sp-2) var(--sp-2) var(--sp-2); }
+      .step__q { font-size: 18px; }
+      .step__q + .options, .step__q + .fields,
+      legend + .options { margin-top: var(--sp-2); }
+      .step__help { margin-bottom: var(--sp-2); font-size: 13px; }
+
+      .options { gap: 8px; }
+      .option__face { padding: 11px 13px; gap: 10px; font-size: 14.5px; min-height: 48px; }
+      .fields { gap: 12px; }
+      .field textarea { min-height: 104px; }
+
+      .actions { gap: var(--sp-1); margin-top: var(--sp-2); padding-top: var(--sp-2); padding-bottom: 4px; }
+      .btn { padding: 13px 20px; min-height: 48px; }
+    }
+
+    /* Very short screens (landscape phones, 3rd-gen SE): tighten again rather
+       than let the button slip below. */
+    @media (max-height: 640px) {
+      .progress { padding: 10px var(--sp-2) 8px; }
+      .options { gap: 7px; }
+      .option__face { padding: 10px 13px; min-height: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Progress. data-* free on purpose: render() owns every value here. -->
+  <div class="progress">
+    <div class="progress__track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Survey progress" id="bar">
+      <div class="progress__fill" id="fill"></div>
+    </div>
+    <div class="progress__label" id="steplabel" aria-live="polite"></div>
+  </div>
+
+  <main class="wrap">
+    <!-- Shown ONLY when this page is the top document, i.e. someone opened
+         /brand-operator-survey directly from a link. Inside the iframe on the
+         confirmation pages it stays hidden, because the page around it already
+         carries "Tell Eman Where You're At" and repeating it would read as a
+         duplicated heading. html.is-standalone is set in the head script. -->
+    <div class="masthead">
+      <h1>Tell Eman Where You&rsquo;re At</h1>
+      <p>1 minute. It shapes what gets covered live this week.</p>
+    </div>
+
+    <!-- novalidate: the JS below is the ONLY gate, so the browser never puts up
+         a competing bubble. Same convention as initForm() in assets/js/main.js. -->
+    <form id="survey" novalidate>
+
+      <!-- ============================ STEP 1 ============================ -->
+      <section class="step" id="step-1" data-step="1" hidden>
+        <h2 class="step__q" id="q1" tabindex="-1">First, let&rsquo;s confirm who you are.</h2>
+        <div class="fields">
+          <div class="field" id="f-first">
+            <label for="first_name">First name</label>
+            <input id="first_name" name="first_name" type="text" autocomplete="given-name" aria-describedby="e-first" />
+            <span class="error" id="e-first" role="alert">Please enter your first name.</span>
+          </div>
+          <div class="field" id="f-last">
+            <label for="last_name">Last name</label>
+            <input id="last_name" name="last_name" type="text" autocomplete="family-name" aria-describedby="e-last" />
+            <span class="error" id="e-last" role="alert">Please enter your last name.</span>
+          </div>
+          <div class="field" id="f-email">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" inputmode="email" autocomplete="email" aria-describedby="e-email" />
+            <span class="error" id="e-email" role="alert">Please enter a valid email address.</span>
+          </div>
+          <div class="field" id="f-phone">
+            <label for="phone">Phone number</label>
+            <!-- US only, 10 digits. maxlength counts characters not digits, so
+                 it is a convenience; validate() holds the real NANP rule. -->
+            <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national"
+                   maxlength="14" placeholder="(212) 555-0123" aria-describedby="h-phone e-phone" />
+            <span class="hint" id="h-phone">US numbers only. For reminders about the training.</span>
+            <span class="error" id="e-phone" role="alert">Please enter a valid 10-digit US phone number.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ STEP 2 ============================ -->
+      <section class="step" id="step-2" data-step="2" hidden>
+        <fieldset>
+          <legend class="step__q" id="q2" tabindex="-1">Which one sounds most like you?</legend>
+          <div class="options" data-group="experience">
+            <label class="option"><input type="radio" name="experience" value="I've never built or sold a product before" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>I&rsquo;ve never built or sold a product before</span></span></label>
+            <label class="option"><input type="radio" name="experience" value="I've thought about starting a brand but never pulled the trigger" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>I&rsquo;ve thought about starting a brand but never pulled the trigger</span></span></label>
+            <label class="option"><input type="radio" name="experience" value="I tried building something once - it didn't get off the ground" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>I tried building something once &mdash; it didn&rsquo;t get off the ground</span></span></label>
+            <label class="option"><input type="radio" name="experience" value="I have a product or brand already and want to grow it" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>I have a product or brand already and want to grow it</span></span></label>
+            <label class="option"><input type="radio" name="experience" value="I have capital set aside and I'm looking for the right vehicle to build with" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>I have capital set aside and I&rsquo;m looking for the right vehicle to build with</span></span></label>
+          </div>
+          <span class="error choice-error" id="e-experience" role="alert">Please choose the one that fits best.</span>
+        </fieldset>
+      </section>
+
+      <!-- ============================ STEP 3 ============================ -->
+      <section class="step" id="step-3" data-step="3" hidden>
+        <fieldset>
+          <legend class="step__q" id="q3" tabindex="-1">How much have you invested in the past into starting businesses and/or education?</legend>
+          <p class="step__help">Business opportunities, coaching, mentorships, and anything similar.</p>
+          <div class="options" data-group="past_investment">
+            <label class="option"><input type="radio" name="past_investment" value="Nothing yet, this would be my first real investment in myself" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>Nothing yet, this would be my first real investment in myself</span></span></label>
+            <label class="option"><input type="radio" name="past_investment" value="Under $5,000" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>Under $5,000</span></span></label>
+            <label class="option"><input type="radio" name="past_investment" value="$5,000 to $10,000" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>$5,000 to $10,000</span></span></label>
+            <label class="option"><input type="radio" name="past_investment" value="$10,000 to $30,000" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>$10,000 to $30,000</span></span></label>
+            <label class="option"><input type="radio" name="past_investment" value="$30,000+" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>$30,000+</span></span></label>
+          </div>
+          <span class="error choice-error" id="e-past_investment" role="alert">Please choose the one that fits best.</span>
+        </fieldset>
+      </section>
+
+      <!-- ============================ STEP 4 ============================ -->
+      <section class="step" id="step-4" data-step="4" hidden>
+        <fieldset>
+          <legend class="step__q" id="q4" tabindex="-1">What would a win look like for you?</legend>
+          <div class="options" data-group="goal">
+            <label class="option"><input type="radio" name="goal" value="A brand generating $2,000-$5,000/month in profit" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>A brand generating $2,000&ndash;$5,000/month in profit</span></span></label>
+            <label class="option"><input type="radio" name="goal" value="A brand generating $5,000-$10,000/month in profit" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>A brand generating $5,000&ndash;$10,000/month in profit</span></span></label>
+            <label class="option"><input type="radio" name="goal" value="A brand generating $10,000+/month in profit" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>A brand generating $10,000+/month in profit</span></span></label>
+            <label class="option"><input type="radio" name="goal" value="An asset I can eventually sell" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>An asset I can eventually sell</span></span></label>
+          </div>
+          <span class="error choice-error" id="e-goal" role="alert">Please choose the one that fits best.</span>
+        </fieldset>
+      </section>
+
+      <!-- ============================ STEP 5 ============================ -->
+      <section class="step" id="step-5" data-step="5" hidden>
+        <fieldset>
+          <legend class="step__q" id="q5" tabindex="-1">What could you comfortably put toward building your brand?</legend>
+          <p class="step__help">Think total &mdash; product samples, inventory, ads, and any education.</p>
+          <div class="options" data-group="budget">
+            <label class="option"><input type="radio" name="budget" value="Under $7,500" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>Under $7,500</span></span></label>
+            <label class="option"><input type="radio" name="budget" value="$7,500 to $15,000" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>$7,500 to $15,000</span></span></label>
+            <label class="option"><input type="radio" name="budget" value="$15,000 to $20,000" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>$15,000 to $20,000</span></span></label>
+            <label class="option"><input type="radio" name="budget" value="$20,000+" /><span class="option__face"><span class="option__dot" aria-hidden="true"></span><span>$20,000+</span></span></label>
+          </div>
+          <span class="error choice-error" id="e-budget" role="alert">Please choose the one that fits best.</span>
+        </fieldset>
+      </section>
+
+      <!-- ============================ STEP 6 ============================ -->
+      <section class="step" id="step-6" data-step="6" hidden>
+        <h2 class="step__q" id="q6" tabindex="-1">What&rsquo;s the ONE thing you&rsquo;d like Eman to cover LIVE on the webinar?</h2>
+        <div class="field" id="f-open">
+          <label class="sr-only" for="open_answer">Your answer</label>
+          <textarea id="open_answer" name="open_answer" placeholder="Type your answer here..." aria-describedby="e-open"></textarea>
+          <span class="error" id="e-open" role="alert">Please tell us the one thing you want covered.</span>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button class="btn" type="submit" id="next">Next &rarr;</button>
+        <button class="btn btn--back" type="button" id="back" hidden>Back</button>
+      </div>
+    </form>
+
+    <!-- Confirmation. Replaces the form once the send settles. -->
+    <div class="done" id="done" hidden>
+      <div class="done__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h2 tabindex="-1" id="done-title">You&rsquo;re all set. See you on the webinar.</h2>
+      <p>Check your inbox for the link.</p>
+    </div>
+  </main>
+
+  <script>
+  /* ==========================================================================
+     CONFIGURE ME  --  the only value you need to change in this file.
+     ========================================================================== */
+
+  // Your Zapier "Catch Hook" URL. The Zap is what forwards the Lead to Meta's
+  // Conversions API (Facebook Conversions -> Send Lead Event), which is why no
+  // pixel id and no access token appear anywhere in this file.
+  // The Zapier hook URL is NO LONGER HERE. It lives in Vercel as
+  // ZAPIER_SURVEY_HOOK_URL and the relay forwards to it, because a Catch Hook
+  // posted to straight from this page can never carry client_ip_address - a
+  // browser cannot read its own public IP. It also keeps the hook URL out of a
+  // file anyone can view-source.
+
+  // Same-origin funnel relay. Holds the dashboard webhook secret so this public
+  // page never embeds it. Posts event=survey; the relay skips registration Zaps.
+  const OPSHUB_RELAY_URL = "/api/register";
+
+  // How long to wait for the webhook before showing the success screen anyway.
+  // The visitor is never held up by marketing plumbing.
+  const SEND_TIMEOUT_MS = 5000;
+
+  /* ========================================================================== */
+
+  (function () {
+    "use strict";
+
+    var $  = function (s, r) { return (r || document).querySelector(s); };
+    var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+    var form   = $("#survey");
+    var nextBtn = $("#next");
+    var backBtn = $("#back");
+    var fill    = $("#fill");
+    var bar     = $("#bar");
+    var label   = $("#steplabel");
+    var done    = $("#done");
+
+    var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/;
+    /* The real NANP pattern rather than a length check: neither the area code
+       nor the exchange may start 0 or 1, which rejects 1234567890 and
+       0000000000. Same rule as isUsablePhone() on the opt-in forms. */
+    var NANP_RE = /^[2-9]\d{2}[2-9]\d{6}$/;
+    function phoneDigits(v) { return String(v || "").replace(/\D/g, ""); }
+    /* E.164 -> the 10-digit national number this field expects. rememberLead()
+       stores the phone as +12125550123, and stripping non-digits leaves ELEVEN
+       digits with the country code still on the front, which fails NANP_RE and
+       would leave the prefill showing an invalid number and never skipping
+       step 1. Only a leading 1 on an 11-digit string is dropped, so a genuine
+       10-digit entry starting with 1 is untouched (and NANP_RE rejects that
+       anyway, since an area code cannot start with 1). */
+    function phoneNational(v) {
+      var d = phoneDigits(v);
+      if (d.length === 11 && d.charAt(0) === "1") d = d.slice(1);
+      return d;
+    }
+
+    /* ----------------------------------------------------------------------
+       STEP MODEL
+
+       `order` is the list of steps in play. Every step is always in it: an
+       earlier version spliced step 1 out when the prefill succeeded, which is
+       no longer done, so this is a plain 1..6 and the progress bar always reads
+       "of 6". Kept as a list rather than a counter because the render path is
+       written against it and a future variant may want to drop a step again.
+       ---------------------------------------------------------------------- */
+    var steps = $$(".step").map(function (el) { return Number(el.getAttribute("data-step")); });
+    var order = steps.slice();
+    var at = 0;                       // index into `order`
+
+    /* ----------------------------------------------------------------------
+       PREFILL
+
+       Values arrive as ?first_name=&last_name=&email=. Step 1 is skipped only
+       when all three are present AND the email parses: a malformed address has
+       to be corrected by hand rather than submitted silently, since it is the
+       one field the whole follow-up depends on.
+       ---------------------------------------------------------------------- */
+    var prefilled = false;
+    var prefillSource = "none";
+    (function prefill() {
+      var map = { first_name: "#first_name", last_name: "#last_name", email: "#email", phone: "#phone" };
+
+      /* Two sources, lowest precedence first.
+
+         1. sessionStorage "tbo_lead", written by rememberLead() in main.js when
+            the visitor registered. This is the normal path: the survey is
+            embedded on the confirmation page, and a same-origin iframe shares
+            the tab's sessionStorage with the page around it, so the four fields
+            they just typed are already here. Nothing goes through a URL, so no
+            email or phone lands in the DOM.
+
+            Filling the fields is ALL this does. Step 1 still shows either way;
+            see the note further down.
+
+         2. URL parameters, which OVERRIDE the stored values because they are an
+            explicit instruction from whoever built the link.
+
+         The phone arrives as E.164 (+12125550123) and is stripped back to bare
+         digits, because the input is a 10-digit US field and NANP_RE is applied
+         to digits. Leaving the +1 in would fail the visitor's own prefill. */
+      var stored = {};
+      try { stored = JSON.parse(sessionStorage.getItem("tbo_lead") || "{}") || {}; }
+      catch (err) { stored = {}; }
+
+      var q = null;
+      try { q = new URLSearchParams(location.search); } catch (err) { q = null; }
+
+      var fromStore = 0, fromUrl = 0;
+      Object.keys(map).forEach(function (key) {
+        var input = $(map[key]);
+        if (!input) return;
+        var v = String(stored[key] || "").trim();
+        if (v) { fromStore += 1; }
+        var u = q ? String(q.get(key) || "").trim() : "";
+        if (u) { v = u; fromUrl += 1; }
+        if (!v) return;
+        input.value = (key === "phone") ? phoneNational(v) : v;
+      });
+
+      var filled = ["first_name", "last_name", "email", "phone"].filter(function (k) {
+        var input = $(map[k]);
+        return input && input.value.trim() !== "";
+      }).length;
+
+      /* STEP 1 IS NEVER SKIPPED, even when all four fields arrive filled and
+         valid. It used to be, and that was the wrong call: the handoff depends
+         on sessionStorage surviving the trip from the opt-in page, and when it
+         does not — a new tab, private mode, storage cleared — skipping would
+         either strand the visitor on a question they never saw or, worse, hide
+         a prefill that filled the wrong thing. Showing the step costs one tap
+         on a screen that is already filled in, and buys the visitor the chance
+         to see and correct what we guessed. `prefilled` now records that the
+         fields arrived populated, not that anything was skipped. */
+      prefilled = filled === 4
+        && EMAIL_RE.test($("#email").value.trim())
+        && NANP_RE.test(phoneNational($("#phone").value));
+      prefillSource = fromUrl ? (fromStore ? "url+session" : "url")
+                    : (fromStore ? "session" : "none");
+    })();
+
+    /* ----------------------------------------------------------------------
+       FUNNEL ATTRIBUTION
+
+       Same-origin leftovers from the opt-in pages. The event id is the one that
+       matters: assets/js/main.js mints meta_lead_event_id per visit and mirrors
+       it to localStorage so the Pixel and a server-side CAPI call can send the
+       SAME id and Meta deduplicates them. Pass it to the Zap or this Lead and
+       the Pixel's Lead are counted as two separate conversions.
+
+       _fbp/_fbc are read live from the cookie first, because the Pixel may have
+       refreshed them since the stored record was written; the sessionStorage
+       record is the fallback for a visitor who arrived before the pixel loaded.
+       Everything here is best effort -- private mode throws on storage access
+       and the survey must still submit.
+       ---------------------------------------------------------------------- */
+    function cookie(name) {
+      try {
+        var hit = ("; " + document.cookie).split("; " + name + "=");
+        return hit.length === 2 ? decodeURIComponent(hit.pop().split(";").shift()) : "";
+      } catch (err) { return ""; }
+    }
+    function readFunnelAttribution() {
+      var out = { event_id: "", fbp: "", fbc: "", utm_source: "", utm_medium: "", utm_campaign: "" };
+      try { out.event_id = localStorage.getItem("meta_lead_event_id") || ""; } catch (err) {}
+      out.fbp = cookie("_fbp");
+      out.fbc = cookie("_fbc");
+      var rec = {};
+      try { rec = JSON.parse(sessionStorage.getItem("tbo_attribution") || "{}") || {}; } catch (err) { rec = {}; }
+      ["utm_source", "utm_medium", "utm_campaign"].forEach(function (k) {
+        if (rec[k]) out[k] = rec[k];
+      });
+      if (!out.fbp && rec._fbp) out.fbp = rec._fbp;
+      if (!out.fbc && rec._fbc) out.fbc = rec._fbc;
+      if (!out.event_id && rec.meta_lead_event_id) out.event_id = rec.meta_lead_event_id;
+      return out;
+    }
+
+    /* ----------------------------------------------------------------------
+       SHA-256, for Meta's customer-information parameters.
+
+       Meta requires PII hashed, and normalises first: trim, lowercase. Hashing
+       needs no secret, so it happens here rather than in the Zap. Plain values
+       go along too, because whether Zapier's Facebook Conversions app expects
+       raw or hashed input is undocumented -- sending both means the Zap maps
+       whichever it wants and nothing has to change here.
+
+       crypto.subtle is unavailable on insecure origins (plain http, or file://
+       in some browsers), so every hash degrades to "" rather than throwing.
+       ---------------------------------------------------------------------- */
+    function sha256(value) {
+      var v = String(value || "").trim().toLowerCase();
+      if (!v) return Promise.resolve("");
+      if (!window.crypto || !window.crypto.subtle || !window.TextEncoder) {
+        return Promise.resolve("");
+      }
+      return window.crypto.subtle
+        .digest("SHA-256", new TextEncoder().encode(v))
+        .then(function (buf) {
+          return Array.prototype.map
+            .call(new Uint8Array(buf), function (b) { return ("00" + b.toString(16)).slice(-2); })
+            .join("");
+        })
+        .catch(function () { return ""; });
+    }
+
+    /* ----------------------------------------------------------------------
+       VALIDATION. Per step, so Next never advances past an empty answer.
+       ---------------------------------------------------------------------- */
+    function setError(fieldEl, on) {
+      if (!fieldEl) return;
+      fieldEl.classList.toggle("has-error", !!on);
+    }
+    function markChoice(group, on) {
+      var err = $("#e-" + group);
+      if (err) err.parentNode.classList.toggle("has-error", !!on);
+    }
+
+    function validate(stepNo) {
+      if (stepNo === 1) {
+        var f = $("#first_name"), l = $("#last_name"), e = $("#email");
+        var okF = f.value.trim().length > 0;
+        var okL = l.value.trim().length > 0;
+        var okE = EMAIL_RE.test(e.value.trim());
+        var ph = $("#phone");
+        var okP = NANP_RE.test(phoneDigits(ph.value));
+        setError($("#f-first"), !okF); setError($("#f-last"), !okL);
+        setError($("#f-email"), !okE); setError($("#f-phone"), !okP);
+        if (!okF) { f.focus(); return false; }
+        if (!okL) { l.focus(); return false; }
+        if (!okE) { e.focus(); return false; }
+        if (!okP) { ph.focus(); return false; }
+        return true;
+      }
+      if (stepNo === 6) {
+        var t = $("#open_answer");
+        var okT = t.value.trim().length > 0;
+        setError($("#f-open"), !okT);
+        if (!okT) { t.focus(); return false; }
+        return true;
+      }
+      // every other step is a single radio group
+      var groupEl = $(".options", $("#step-" + stepNo));
+      var group = groupEl.getAttribute("data-group");
+      var picked = $$('input[name="' + group + '"]', groupEl).filter(function (r) { return r.checked; });
+      markChoice(group, picked.length === 0);
+      if (!picked.length) {
+        var first = $('input[name="' + group + '"]', groupEl);
+        if (first) first.focus();
+        return false;
+      }
+      return true;
+    }
+
+    /* ----------------------------------------------------------------------
+       RENDER. One place owns visibility, the bar, the announced label and the
+       button text, so they cannot drift out of sync.
+       ---------------------------------------------------------------------- */
+    function render() {
+      var current = order[at];
+      $$(".step").forEach(function (el) {
+        el.hidden = Number(el.getAttribute("data-step")) !== current;
+      });
+
+      var pct = Math.round(((at + 1) / order.length) * 100);
+      fill.style.width = pct + "%";
+      bar.setAttribute("aria-valuenow", String(pct));
+      label.textContent = "Step " + (at + 1) + " of " + order.length;
+
+      var last = at === order.length - 1;
+      nextBtn.textContent = last ? "Submit" : "Next →";
+      backBtn.hidden = at === 0;
+
+      /* Only draws the hairline above the action bar when the step actually
+         scrolls, so a step that fits shows no divider at all. Measured after
+         paint, since the step was display:none a moment ago and would report a
+         zero height. */
+      requestAnimationFrame(function () {
+        var el = $("#step-" + current);
+        var scrolls = !!el && el.scrollHeight > el.clientHeight + 1;
+        document.body.classList.toggle("is-scrollable", scrolls);
+      });
+    }
+
+    function focusStep() {
+      var current = order[at];
+      var head = $("#q" + current);
+      if (head && typeof head.focus === "function") head.focus();
+    }
+
+    function go(delta) {
+      at = Math.max(0, Math.min(order.length - 1, at + delta));
+      render();
+      focusStep();
+      try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (err) { window.scrollTo(0, 0); }
+    }
+
+    /* ----------------------------------------------------------------------
+       SUBMIT
+
+       allSettled, not all: `all` rejects on the first failure, which would skip
+       any sibling request and strand the visitor on a spinner. The 5s race means
+       a slow or dead webhook still ends on the success screen.
+       ---------------------------------------------------------------------- */
+    function collect() {
+      var fd = new FormData(form);
+      var get = function (k) { return String(fd.get(k) || "").trim(); };
+      return {
+        first_name: get("first_name"),
+        last_name:  get("last_name"),
+        email:      get("email"),
+        phone:      get("phone"),
+        experience: get("experience"),
+        past_investment: get("past_investment"),
+        goal:       get("goal"),
+        budget:     get("budget"),
+        open_answer: get("open_answer")
+      };
+    }
+
+    function buildPayload() {
+      var base = collect();
+      var attr = readFunnelAttribution();
+      return Promise.all([
+        sha256(base.email), sha256(base.first_name), sha256(base.last_name)
+      ]).then(function (h) {
+        return {
+          event: "survey",
+          optin_type: "survey",
+          form_name: "brand-operator-survey",
+          first_name: base.first_name,
+          last_name:  base.last_name,
+          email:      base.email,
+          // E.164, built from digits only. validate() has already confirmed the
+          // NANP pattern by this point, so a half-typed number is never stamped.
+          phone:      "+1" + phoneDigits(base.phone),
+          phone_country_iso: "US",
+          // Meta's customer-information parameters, pre-normalised and hashed.
+          email_sha256:      h[0],
+          first_name_sha256: h[1],
+          last_name_sha256:  h[2],
+          experience:  base.experience,
+          past_investment: base.past_investment,
+          goal:        base.goal,
+          budget:      base.budget,
+          open_answer: base.open_answer,
+          submitted_at: new Date().toISOString(),
+          // dedupe + match quality, see readFunnelAttribution()
+          event_id: attr.event_id,
+          fbp: attr.fbp,
+          fbc: attr.fbc,
+          utm_source: attr.utm_source,
+          utm_medium: attr.utm_medium,
+          utm_campaign: attr.utm_campaign,
+          prefilled: prefilled,
+          // "session" on the normal path, "url" for a hand-built link, "none"
+          // if the visitor typed everything. Makes a broken handoff visible in
+          // the data rather than only as a drop in completions.
+          prefill_source: prefillSource,
+          page: location.pathname,
+          page_url: location.href,
+          user_agent: navigator.userAgent || ""
+          // client_ip_address is deliberately absent: a browser cannot read its
+          // own public IP. Fill it in the Zap from the request if you need it.
+        };
+      });
+    }
+
+    function sendTo(url, payload, label) {
+      if (!url) {
+        console.warn("[survey] " + (label || "destination") + " is empty - nothing was sent.");
+        return Promise.reject(new Error("no destination"));
+      }
+      return fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        // Survives the page being left mid-flight.
+        keepalive: true,
+        mode: "cors"
+      });
+    }
+
+    function finish() {
+      form.hidden = true;
+      done.hidden = false;
+      var h = $("#done-title");
+      if (h && typeof h.focus === "function") h.focus();
+      try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (err) { window.scrollTo(0, 0); }
+    }
+
+    var submitting = false;
+    function submit() {
+      if (submitting) return;
+      submitting = true;
+      nextBtn.disabled = true;
+      nextBtn.textContent = "Sending...";
+
+      buildPayload().then(function (payload) {
+        // One destination today. The array is the seam for adding another
+        // without restructuring anything around it.
+        /* One destination, and one only. The relay fans out from there to the
+           dashboard AND to ZAPIER_SURVEY_HOOK_URL, stamping client_ip_address
+           on the way. Posting to Zapier from here as well would deliver a
+           second, IP-less copy of the same submission. */
+        var sends = [sendTo(OPSHUB_RELAY_URL, payload, "OPSHUB_RELAY_URL")];
+        var settled = Promise.allSettled(sends);
+        var timeout = new Promise(function (res) { setTimeout(res, SEND_TIMEOUT_MS); });
+        return Promise.race([settled, timeout]);
+      }).catch(function () {
+        /* never block the visitor on a send failure */
+      }).then(finish);
+    }
+
+    /* ----------------------------------------------------------------------
+       WIRING
+       ---------------------------------------------------------------------- */
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!validate(order[at])) return;
+      if (at === order.length - 1) { submit(); return; }
+      go(1);
+    });
+
+    backBtn.addEventListener("click", function () { go(-1); });
+
+    // Picking an answer clears its error immediately rather than waiting for
+    // another Next press.
+    $$(".options").forEach(function (groupEl) {
+      groupEl.addEventListener("change", function () {
+        markChoice(groupEl.getAttribute("data-group"), false);
+      });
+    });
+    $$("#first_name, #last_name, #email, #phone, #open_answer").forEach(function (input) {
+      input.addEventListener("input", function () {
+        var field = input.closest(".field");
+        if (field) field.classList.remove("has-error");
+      });
+    });
+
+    render();
+    if (prefilled) focusStep();
+  })();
+  </script>
+</body>
+</html>

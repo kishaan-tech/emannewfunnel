@@ -1425,7 +1425,7 @@
      line, and celebrate the final row with a CSS confetti burst (once).
      Brand palette only (bright orange + gold, sparse neutral).
      ----------------------------------------------------------------------- */
-  var CONFETTI_COLORS = ["#F97316", "#FBA35C", "#B8892B", "#D8D5CC"]; // accent orange, light orange, gold, soft neutral
+  var CONFETTI_COLORS = ["#3B82F6", "#93C5FD", "#B8892B", "#D8D5CC"]; // accent blue, light blue, gold, soft neutral
 
   function fireConfetti(badge) {
     if (badge.hasAttribute("data-celebrated")) return;   // fire exactly once

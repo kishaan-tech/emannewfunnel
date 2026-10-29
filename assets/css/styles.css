@@ -6,10 +6,10 @@
 /* ----------------------------------------------------------------------------
    THEME TOKENS
    >>> TO RESKIN THE WHOLE SITE: change --accent (bright fills/buttons),
-       --accent-strong (orange text on light backgrounds), and --accent-wash below.
+       --accent-strong (blue text on light backgrounds), and --accent-wash below.
        Everything else (buttons, highlights, glow, checks) derives from them.
        NOTE: --accent is bright, so text ON it uses the dark --accent-ink (for AA),
-       and orange TEXT on light surfaces uses the deeper --accent-strong (for AA).
+       and blue TEXT on light surfaces uses the deeper --accent-strong (for AA).
        Do not hardcode colours anywhere else in this file.
    ---------------------------------------------------------------------------- */
 :root {
@@ -17,11 +17,11 @@
   --grid-line:     rgba(20,20,15,0.05);   /* faint graph-paper lines */
   --ink:           #16150F;               /* near-black headline text */
   --ink-soft:      #56544C;               /* muted body / subhead text */
-  --accent:        #F97316;               /* bright orange — primary brand color (fills, buttons, blocks) */
-  --accent-strong: #B4370A;               /* deeper orange for orange TEXT on light backgrounds (keeps AA) */
-  --accent-ink:    #1B1206;               /* near-black text on bright-orange fills (AA ~6.5:1) */
-  --accent-wash:   rgba(249,115,22,0.12); /* corner glow + highlight backgrounds */
-  --accent-wash-soft: rgba(249,115,22,0.06); /* even fainter secondary wash */
+  --accent:        #3B82F6;               /* bright blue — primary brand color (fills, buttons, blocks) */
+  --accent-strong: #1D4ED8;               /* deeper blue for blue TEXT on light backgrounds (keeps AA) */
+  --accent-ink:    #0A1226;               /* near-black text on bright-blue fills (AA ~5:1) */
+  --accent-wash:   rgba(59,130,246,0.12); /* corner glow + highlight backgrounds */
+  --accent-wash-soft: rgba(59,130,246,0.06); /* even fainter secondary wash */
   --highlight:     #B8892B;               /* warm gold — used VERY sparingly */
   --card:          #FFFFFF;               /* card surfaces float on the canvas */
   --card-border:   rgba(20,20,15,0.08);
@@ -537,12 +537,12 @@ section { padding-block: var(--section-y); }
    the orange fill, the badge, and a deeper shadow instead of size. */
 @media (min-width: 720px) { .bonus--featured { box-shadow: var(--shadow-lg); } }
 .bonus--featured h3 { color: var(--accent-ink); }
-.bonus--featured p { color: rgba(27,18,6,0.74); }
-.bonus--featured .icon-wrap { background: rgba(27,18,6,0.12); }
+.bonus--featured p { color: rgba(10,18,38,0.74); }
+.bonus--featured .icon-wrap { background: rgba(10,18,38,0.12); }
 .bonus--featured .icon-wrap svg { color: var(--accent-ink); }
 .bonus--featured .tag {
   display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; background: rgba(27,18,6,0.14); color: var(--accent-ink);
+  text-transform: uppercase; background: rgba(10,18,38,0.14); color: var(--accent-ink);
   padding: 4px 12px; border-radius: var(--radius-pill); margin-bottom: var(--sp-2);
 }
 
@@ -1485,7 +1485,7 @@ dialog.modal {
   display: grid; place-items: center;
   background: var(--accent-wash-soft);
   border-style: dashed;
-  border-color: rgba(249,115,22,0.35);
+  border-color: rgba(59,130,246,0.35);
 }
 .video-embed--placeholder span {
   display: grid; gap: 4px; justify-items: center; text-align: center;

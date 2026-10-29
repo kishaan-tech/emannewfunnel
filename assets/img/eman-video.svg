@@ -3,12 +3,12 @@
   <rect width="800" height="600" fill="url(#g)"/>
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#F97316" stop-opacity="0.35"/>
+      <stop offset="0" stop-color="#3B82F6" stop-opacity="0.35"/>
       <stop offset="1" stop-color="#7A2A08" stop-opacity="0"/>
     </linearGradient>
   </defs>
   <circle cx="400" cy="270" r="64" fill="#FFFFFF" fill-opacity="0.92"/>
-  <path d="M384 240l52 30-52 30z" fill="#F97316"/>
+  <path d="M384 240l52 30-52 30z" fill="#3B82F6"/>
   <text x="400" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#FFFFFF">PLACEHOLDER</text>
   <text x="400" y="428" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#FFFFFF" fill-opacity="0.85">Eman intro video</text>
 </svg>

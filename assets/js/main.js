@@ -502,6 +502,19 @@
     widget.style.height = "100%";
     host.appendChild(widget);
 
+    // iClosed's loader sizes only the widget div it was given, from these
+    // messages, as the form and calendar change height. Without following along
+    // the host keeps its fixed CSS height and the calendar spills out over
+    // whatever comes next. The CSS height stays as the size before the first
+    // message, and the fallback if none ever arrives.
+    window.addEventListener("message", function (e) {
+      if (e.origin !== "https://app.iclosed.io" || !e.data) return;
+      if (e.data.type !== "iclosed.widget_height") return;
+      var frame = widget.querySelector("iframe");
+      if (!frame || e.source !== frame.contentWindow) return;
+      host.style.height = String(e.data.height);
+    });
+
     // Loaded once. Re-adding the tag on a second call would mount a second
     // calendar rather than refreshing the first.
     var SRC = "https://app.iclosed.io/assets/widget.js";

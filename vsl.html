@@ -6,7 +6,7 @@
 
      Everything visual comes from assets/css/styles.css. The player is filled
      by initVslVideo() from CFG.vslVideoId and the calendar by
-     initBookingEmbed() from CFG.bookCallUrl; both show a labelled placeholder
+     initBookingEmbed() from CFG.vslBookCallUrl; both show a labelled placeholder
      box until their value is real.
 
      Base Meta Pixel + PageView only. No conversion events fire here; those stay
@@ -75,12 +75,12 @@
           <span class="pill-text">For salaried professionals earning $100K to $300K+</span>
         </span>
         <h1 id="vsl-title" class="reveal">
-          Turn Idle Six-Figure W2 Income Into An <span class="hl">Owned Cash-Flowing Asset</span>
-          In Under 5 Hours A Week
+          Buy An <span class="hl">Established Amazon Business</span> With Existing Customers,
+          Proven Cash Flow, And Verified Operating History
         </h1>
         <p class="subhead reveal">
-          You do not have time for a 30-hour side hustle. Here is how high-earning professionals
-          buy profitable, vetted Amazon businesses that run without consuming their calendar.
+          How busy W2 professionals deploy idle capital into cash-flowing online assets that pay
+          out every two weeks, without starting from scratch or taking on a second job.
         </p>
 
         <!-- Filled by initVslVideo() from CFG.vslVideoId. Until that holds a
@@ -103,9 +103,11 @@
             and tell you honestly whether this is the right fit for you.
           </p>
 
-          <!-- Same hook and config key as book-call.html: initBookingEmbed()
-               mounts the iClosed widget from CFG.bookCallUrl. -->
-          <div class="booking-embed booking-embed--bare" data-booking-embed></div>
+          <!-- Same hook as book-call.html, but its own iClosed event:
+               initBookingEmbed() mounts the widget from CFG.vslBookCallUrl. -->
+          <div class="booking-embed booking-embed--bare"
+               data-booking-embed="vslBookCallUrl"
+               data-booking-title="The Brand Operator Strategy Call"></div>
         </div>
       </div>
     </section>

@@ -164,6 +164,10 @@ window.FUNNEL_CONFIG = {
      book-call.html mounts this same URL as an inline iClosed widget. */
   bookCallUrl: "https://app.iclosed.io/e/eman/brand-operator-live-training-application-call",
 
+  /* The iClosed event on /vsl. A different event from bookCallUrl, which stays
+     with the webinar funnel's /book-call page. */
+  vslBookCallUrl: "https://app.iclosed.io/e/eman/brand-operator-application-call",
+
   /* The exclusive WhatsApp group, step 1 on the three confirmation pages.
      Wired through THANKYOU_LINKS in main.js, not data-cfg-href, because that
      helper only checks truthiness and would write this placeholder string

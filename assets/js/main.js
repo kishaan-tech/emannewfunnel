@@ -485,9 +485,12 @@
   function initBookingEmbed() {
     var host = $("[data-booking-embed]");
     if (!host) return;
-    var url = String(CFG.bookCallUrl || "").trim();
+    // The attribute's VALUE names a config key, same convention as data-countdown.
+    // Empty means bookCallUrl, so /book-call's markup works untouched.
+    var key = host.getAttribute("data-booking-embed") || "bookCallUrl";
+    var url = String(CFG[key] || "").trim();
     if (!looksConfigured(url) || url.indexOf("http") !== 0) {
-      host.innerHTML = placeholderBox("[PLACEHOLDER: set bookCallUrl in config.js]");
+      host.innerHTML = placeholderBox("[PLACEHOLDER: set " + key + " in config.js]");
       return;
     }
     // iClosed's inline widget: an empty div carrying the event URL, plus their
@@ -497,7 +500,7 @@
     var widget = document.createElement("div");
     widget.className = "iclosed-widget";
     widget.setAttribute("data-url", url);
-    widget.title = "Choose a time for your call";
+    widget.title = host.getAttribute("data-booking-title") || "Choose a time for your call";
     widget.style.width = "100%";
     widget.style.height = "100%";
     host.appendChild(widget);

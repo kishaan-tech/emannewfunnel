@@ -731,7 +731,9 @@ wistia-player[media-id='xu2wo99rcf']:not(:defined) { background-image: url('http
    normal .card whose heading block centres over the calendar. */
 .vsl-frame { box-shadow: 0 0 0 1px var(--accent-wash), 0 18px 60px var(--accent-wash); }
 .apply-card { text-align: center; }
-.apply-card .booking-embed { margin-top: var(--sp-3); text-align: left; }
+/* 620px is iClosed's own starting height for this event. It only holds until
+   the widget reports its real height, which initBookingEmbed() then follows. */
+.apply-card .booking-embed { margin-top: var(--sp-3); text-align: left; height: 620px; }
 
 /* The policy links on /book-call, sitting under the calendar instead of in a
    footer. .footer-links already handles the row itself; this only buys the

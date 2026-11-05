@@ -2146,6 +2146,46 @@
     });
   }
 
+  /* -------------------------------------------------------------------------
+     LIGHTBOX: tap a [data-lightbox] link to enlarge its href in a <dialog>.
+     data-lightbox="wide" keeps a legible width and scrolls sideways on a phone.
+     Each link is a real link to the image, so with JS off it still opens it.
+     ----------------------------------------------------------------------- */
+  function initLightbox() {
+    var links = $all("[data-lightbox]");
+    if (!links.length || typeof HTMLDialogElement === "undefined") return;
+
+    var dialog = document.createElement("dialog");
+    dialog.className = "lightbox";
+    var close = document.createElement("button");
+    close.type = "button";
+    close.className = "lightbox-close";
+    close.setAttribute("aria-label", "Close");
+    close.textContent = "\u00D7";
+    var img = document.createElement("img");
+    img.className = "lightbox-img";
+    dialog.appendChild(close);
+    dialog.appendChild(img);
+    document.body.appendChild(dialog);
+
+    dialog.addEventListener("click", function () { dialog.close(); });
+    dialog.addEventListener("close", function () { img.removeAttribute("src"); });
+
+    links.forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        var thumb = link.querySelector("img");
+        img.alt = thumb ? thumb.alt : "";
+        img.src = link.getAttribute("href");
+        dialog.classList.toggle("lightbox--wide", link.getAttribute("data-lightbox") === "wide");
+        dialog.showModal();
+        // Centre sideways: on a phone that puts a wide table's middle in view,
+        // not the far-left edge of the screenshot.
+        dialog.scrollTo((dialog.scrollWidth - dialog.clientWidth) / 2, 0);
+      });
+    });
+  }
+
   /* -----------------------------------------------------------------------
      BOOT
      ----------------------------------------------------------------------- */
@@ -2161,6 +2201,7 @@
     initCapacity();
     initModal();
     initReveal();
+    initLightbox();
     initBonusGrid();
     initTimeline();
     initCalendar();

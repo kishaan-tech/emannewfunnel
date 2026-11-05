@@ -1816,3 +1816,79 @@ body.modal-open .sticky-cta { transform: translateY(110%); visibility: hidden; }
    scroll-margin-top offsets the landing point by the banner's height plus a
    little breathing room. Applies to smooth and instant scrolling alike. */
 [id="steps-title"] { scroll-margin-top: 78px; }
+
+/* ----------------------------------------------------------------------------
+   PROOF SECTIONS (/vsl, /vsl1): purchases, people, MVRK operating case.
+   ---------------------------------------------------------------------------- */
+.zoom-link { display: block; cursor: zoom-in; }
+.zoom-link img { display: block; width: 100%; height: auto; object-fit: contain; }
+.zoom-hint { font-size: 13px; color: var(--ink-soft); text-align: center; margin: var(--sp-1) 0 0; }
+
+/* Purchases: the typed table keeps prices readable on a phone, where the
+   screenshot alone would not be. */
+.deal-card { padding: var(--sp-2); }
+@media (min-width: 720px) { .deal-card { padding: var(--sp-4); } }
+@media (min-width: 820px) {
+  .deal-card { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--sp-4); align-items: center; }
+  .deal-card .deal-table { margin-top: 0; }
+}
+.deal-table { width: 100%; border-collapse: collapse; margin-top: var(--sp-2); font-size: 14px; line-height: 1.3; }
+.deal-table th, .deal-table td { padding: 12px 8px; text-align: left; vertical-align: top; border-top: 1px solid var(--card-border); }
+.deal-table thead th { border-top: 0; padding-block: 0 8px; font-size: 12px; font-weight: 600; color: var(--ink-soft); }
+.deal-table tbody th { font-weight: 700; color: var(--ink); }
+.deal-table tbody th span { display: block; font-weight: 400; font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+.deal-table tbody td:nth-child(2) { font-weight: 700; color: var(--accent-strong); white-space: nowrap; }
+.deal-table th:first-child, .deal-table td:first-child { padding-left: 0; }
+.deal-table th:last-child, .deal-table td:last-child { padding-right: 0; }
+
+/* People: one column on a phone, two-up from 620px, three-up where it fits.
+   Cards in a row stretch to one height so the row has an even bottom edge. */
+.person-grid { display: grid; gap: var(--sp-3); grid-template-columns: minmax(0, 1fr); margin-top: var(--sp-1); }
+@media (min-width: 620px) { .person-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 620px) and (max-width: 819px) {
+  .person-grid--3 { grid-template-columns: minmax(0, 1fr); }
+  .person-grid--3 .person-card { display: grid; grid-template-columns: 200px minmax(0, 1fr); }
+  .person-grid--3 .person-photo { height: 100%; }
+}
+@media (min-width: 820px) { .person-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.person-card { padding: 0; overflow: hidden; }
+.person-photo { display: block; width: 100%; aspect-ratio: 1; height: auto; object-fit: cover; }
+.person-body { padding: var(--sp-3); }
+.person-body > :last-child { margin-bottom: 0; }
+.person-body h3 { margin-bottom: var(--sp-1); }
+.person-body > p:not(.person-name):not(.person-stage) { font-size: 15px; line-height: 1.55; color: var(--ink-soft); }
+.person-name { font-weight: 700; font-size: 15px; color: var(--ink); margin: 0; }
+.person-stage { font-size: 12px; font-weight: 600; line-height: 1.35; color: var(--accent-strong); margin: 2px 0 var(--sp-2); }
+
+/* MVRK case. The note sits directly under the two figures on purpose: the brief
+   requires the reporting caveats to be displayed with them, not in the footer. */
+.op-stats { display: grid; gap: var(--sp-2); grid-template-columns: minmax(0, 1fr); margin-top: var(--sp-1); margin-bottom: var(--sp-3); }
+@media (min-width: 620px) { .op-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-3); } }
+.op-stat { padding: var(--sp-3); text-align: center; }
+.op-label { font-size: 13px; font-weight: 600; color: var(--accent-strong); margin: 0 0 4px; }
+.op-value { font-size: clamp(34px, 7vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; color: var(--ink); margin: 0 0 var(--sp-1); }
+.op-detail { font-size: 14px; line-height: 1.45; color: var(--ink-soft); margin: 0; }
+.op-note { font-size: 14px; line-height: 1.55; color: var(--ink-soft); text-align: center; max-width: var(--measure); margin: var(--sp-2) auto var(--sp-3); }
+.op-shots { margin-bottom: var(--sp-3); }
+.op-video { max-width: 760px; margin: 0 auto var(--sp-3); }
+.op-story { display: grid; gap: var(--sp-3); grid-template-columns: minmax(0, 1fr); align-items: center; }
+@media (min-width: 620px) { .op-story { grid-template-columns: 220px minmax(0, 1fr); } }
+.op-product { display: block; width: 100%; max-width: 260px; height: auto; margin-inline: auto; border-radius: var(--radius-sm); }
+.op-story p:last-child { margin-bottom: 0; }
+.op-story-note { font-size: 14px; }
+
+/* Tap-to-enlarge viewer, created by initLightbox() in main.js. */
+dialog.lightbox {
+  width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0;
+  border: 0; background: rgba(20,20,15,0.97); overflow: auto; cursor: zoom-out;
+}
+dialog.lightbox[open] { display: grid; }
+dialog.lightbox::backdrop { background: rgba(20,20,15,0.92); }
+.lightbox-img { display: block; margin: auto; padding: 56px 12px 16px; max-width: min(100%, 1100px); height: auto; }
+/* Wide screenshots keep a legible width and scroll sideways on a phone. */
+.lightbox--wide .lightbox-img { width: 1100px; max-width: none; }
+.lightbox-close {
+  position: fixed; top: 10px; right: 10px; width: 44px; height: 44px; z-index: 1;
+  border: 0; border-radius: var(--radius-pill); background: var(--card); color: var(--ink);
+  font: inherit; font-size: 24px; line-height: 1; cursor: pointer;
+}

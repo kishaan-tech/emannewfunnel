@@ -18,7 +18,8 @@
 
   <!-- Visitors who came in through /vsl-organic (marker set there, good for
        24h) are forwarded to /vslconfirmation-organic, query string intact. Runs
-       before the pixel so PageView and Schedule fire on that page, not here. -->
+       before the pixel, so an organic booking fires no PageView and no Schedule
+       here. The organic page fires PageView only, never Schedule. -->
   <script>
   (function () {
     try {

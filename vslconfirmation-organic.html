@@ -15,8 +15,8 @@
      hero, next-steps video, pre-call checklist, the breakout videos, proof,
      closing nudge. Everything visual comes from assets/css/styles.css.
 
-     Meta Pixel fires PageView and Schedule here: reaching this page means a call
-     was booked, so Schedule is the event to optimise VSL ads for. -->
+     Meta Pixel fires PageView only. Schedule is left out so organic bookings
+     stay out of the ad numbers. -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -34,16 +34,9 @@
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '1021776260566857');
   fbq('track', 'PageView');
-  // Skipped on a local preview, so reviewing this page never records a fake booking.
-  // Once per browser, so reloads and return visits to this page don't count as new bookings.
-  if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
-    var scheduleSent = false;
-    try { scheduleSent = localStorage.getItem('bo_schedule_sent') === '1'; } catch (e) {}
-    if (!scheduleSent) {
-      fbq('track', 'Schedule');
-      try { localStorage.setItem('bo_schedule_sent', '1'); } catch (e) {}
-    }
-  }
+  // No Schedule here, on purpose: organic bookings must not add to the
+  // Schedule count the VSL ads are optimised and reported on. Schedule fires
+  // only on /vslconfirmation, for people who did not come through /vsl-organic.
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=1021776260566857&ev=PageView&noscript=1"

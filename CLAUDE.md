@@ -72,9 +72,9 @@ fields instead of 20. Any shared edit has to be applied to it by hand.
 - `replay-optin.html` / `replay.html` / `book-call.html` — the post-webinar replay funnel.
   Driven by `replayDeadlineISO`, `replayVideoId` and `bookCallUrl` in config; both embeds refuse
   to render while their value is still a `[PLACEHOLDER…]` and show a dashed box instead.
-- `vsl.html` / `vsl1.html` / `vslconfirmation.html` — proof sections (purchases, people, MVRK case) come from
+- `vsl.html` / `vsl1.html` / `vsl-organic.html` / `vslconfirmation.html` / `vslconfirmation-organic.html` — `vsl-organic.html` and `vslconfirmation-organic.html` (24 Nov 2026) are straight copies of `vsl.html` and `vslconfirmation.html` on their own URLs. Ads go to `/vsl`, organic links go to `/vsl-organic`. iClosed still redirects every booking to `/vslconfirmation`; `vsl-organic.html` sets localStorage `bo_entry_organic` and `vslconfirmation.html` forwards to `/vslconfirmation-organic` when that marker is under 24h old. Proof sections (purchases, people, MVRK case) come from
   the 31 Oct 2026 proof-first brief, images in `assets/img/proof/`, followed by two full student interviews (Kevin, Timmy) from
-  Eman's YouTube channel. A shared edit goes in all three pages. Those three pages use the real Meta Pixel
+  Eman's YouTube channel. A shared edit goes in all five pages. Those five pages use the real Meta Pixel
   (1021776260566857, BRAND OPERATOR PIXEL); the other pages still hold the placeholder.
   On 5 Nov 2026 Tofeeq moved Dan + Rob first and removed the caveats from Eman's own proof, which the brief had asked for. Don't state how soon after buying the MVRK profit came: it was about four years.
   On 5 Nov 2026 Eman asked to protect Dan: first name only, described as a former C-suite executive at a Fortune 500 company who owns a brand. Never add his surname, employer or brand name back, including in alt text, filenames or the purchases table and screenshot.

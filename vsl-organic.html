@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!-- AD VARIANT of vsl.html, served at /vsl-ad. Identical page on its own URL,
-     so paid traffic can be sent here and told apart from /vsl (by pageUrl and
-     the iClosed referrerUrl). A copy, not an include: a shared edit has to land
-     in vsl.html, vsl1.html and here.
+<!-- ORGANIC VARIANT of vsl.html, served at /vsl-organic. Identical page on its
+     own URL: ads keep going to /vsl, organic links (bio, posts) come here, so
+     the two are told apart by pageUrl and the iClosed referrerUrl. A copy, not
+     an include: a shared edit has to land in vsl.html, vsl1.html and here.
 
      Headline, the VSL player, then the application calendar.
      Modelled on the section order of thebrandoperator.com: promise headline
@@ -21,11 +21,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Marks this browser as having come in through /vsl-ad. After booking,
+  <!-- Marks this browser as having come in through /vsl-organic. After booking,
        iClosed sends everyone to /vslconfirmation, which reads this marker and
-       forwards to /vslconfirmation-ad. -->
+       forwards to /vslconfirmation-organic. -->
   <script>
-  try { localStorage.setItem('bo_entry_ad', String(Date.now())); } catch (e) {}
+  try { localStorage.setItem('bo_entry_organic', String(Date.now())); } catch (e) {}
   </script>
 
   <!-- Meta Pixel Code -->
